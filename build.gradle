@@ -27,8 +27,6 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.0.1'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
