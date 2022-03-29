@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,15 +18,18 @@ import javax.persistence.Id;
 public class Place extends BaseTimeEntity {
 
     @Id @GeneratedValue
+    @Column(name = "place_id")
     private Long id;
 
     private String name;
 
+    @Column(name = "average_rating")
     private Double averageRating;
 
     private Integer latitude;
     private Integer longitude;
 
+    @Column(name = "like_count")
     private Integer likeCount;
 
     private String info;
@@ -34,6 +38,7 @@ public class Place extends BaseTimeEntity {
 
     private String phone;
 
+    @Column(name = "operating_hours")
     private String operatingHours;
 
     private String region1;
@@ -44,8 +49,8 @@ public class Place extends BaseTimeEntity {
 
     private String address;
 
+    @Column(name = "view_count")
     private Integer viewCount;
-
 
     @Builder
     public Place(Long id, String name, Double averageRating, Integer latitude, Integer longitude, Integer likeCount, String info, String image, String phone, String operatingHours, String region1, String region2, String category, String address, Integer viewCount) {
