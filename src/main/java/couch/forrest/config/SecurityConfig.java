@@ -23,15 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
+
     @Autowired
     private FirebaseAuth firebaseAuth;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제
-                .csrf().disable() // csrf 보안 토큰 disable 처리.
-                .authorizeRequests()
+        http.authorizeRequests()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new JwtFilter(userDetailsService, firebaseAuth),
                         UsernamePasswordAuthenticationFilter.class)
@@ -41,11 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // 인증 예외 url
-        web.ignoring()
+        // 회원가입, 메인페이지, 리소스
+        web.ignoring().antMatchers(HttpMethod.POST, "/users")
                 .antMatchers("/")
-                .antMatchers("/members/me")
-                .antMatchers(HttpMethod.POST ,"/members") //회원가입
+                .antMatchers("/resources/**")
                 .antMatchers("/places/**")
                 .antMatchers("/resources/**")
                 .antMatchers("/js/**")

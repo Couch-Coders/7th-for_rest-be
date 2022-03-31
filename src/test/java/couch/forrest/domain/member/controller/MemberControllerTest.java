@@ -1,5 +1,6 @@
 package couch.forrest.domain.member.controller;
 
+import couch.forrest.domain.member.dto.request.MemberSaveRequestDto;
 import couch.forrest.domain.member.service.MemberService;
 import couch.forrest.filter.JwtFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +36,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class MemberControllerTest {
 
-    private static final String uid = "abcd";
-    private static final String email = "abcd@daum.com";
-    private static final String name = "성이름";
+    private static final String uid = "213";
+    private static final String email = "GODRIC@daum.com";
+    private static final String name = "가드릭";
     private static final String picture = "https://www.balladang.com";
 
     @Autowired
@@ -60,6 +61,9 @@ class MemberControllerTest {
     }
 
 
+
+
+
     @Test
     void 로그인_테스트() throws Exception {
         memberService.register(email, name, picture, uid);
@@ -73,11 +77,11 @@ class MemberControllerTest {
                 )
                 .andDo(print());
 
-        /*resultActions
+        resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("uid").value(uid))
                 .andExpect(jsonPath("email").value(email))
                 .andExpect(jsonPath("name").value(name))
-                .andExpect(jsonPath("imgUrl").value(picture));*/
+                .andExpect(jsonPath("imgUrl").value(picture));
     }
 }

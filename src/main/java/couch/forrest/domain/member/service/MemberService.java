@@ -1,8 +1,10 @@
 package couch.forrest.domain.member.service;
 
-import com.google.firebase.ErrorCode;
 import couch.forrest.domain.member.dao.MemberRepository;
+import couch.forrest.domain.member.dto.response.MemberRegisterResponseDto;
 import couch.forrest.domain.member.entity.Member;
+import couch.forrest.exception.CustomException;
+import couch.forrest.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +34,18 @@ public class MemberService implements UserDetailsService{
 
 
     @Transactional
-    public Member register(String email, String name, String picture, String uid) {
-        //Optional<Member> optionalMember = memberRepository.findByUid(uid);
-        //if (optionalMember.isPresent()) {
-          //  throw new CustomException(ErrorCode.EXIST_MEMBER, "해당 계정으로 이미 회원가입을 했습니다.");
-        //}
-
-        Member customUser = Member.builder()
-                .email(email)
-                .name(name)
+    public MemberRegisterResponseDto register(String email, String name, String picture, String uid) {
+        Optional<Member> optionalMember = memberRepository.findByUid(uid);
+        if (optionalMember.isPresent()) {
+            throw new CustomException(ErrorCode.EXIST_USER, "해당 계정으로 이미 회원가입을 했습니다.");
+        }
+        Member member = Member.builder()
                 .uid(uid)
+                .name(name)
+                .email(email)
                 .picture(picture)
                 .build();
-        memberRepository.save(customUser);
-        return customUser;
+
+        return new MemberRegisterResponseDto(memberRepository.save(member));
     }
 }

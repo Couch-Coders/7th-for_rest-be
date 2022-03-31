@@ -42,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             decodedToken = firebaseAuth.verifyIdToken(token);
         } catch (FirebaseAuthException e) {
-            setUnauthorizedResponse(response, "INVALID_TOKEN");
+            setUnauthorizedResponse(response, "verifyIdToken Fail");
             return;
         }
 
