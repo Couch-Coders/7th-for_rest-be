@@ -21,10 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
+    final private FirebaseAuth firebaseAuth;
     final private MemberService memberService;
 
-<<<<<<< Updated upstream
-=======
     @PostMapping("")
     public MemberInfo register(@RequestHeader("Authorization") String authorization)
     {
@@ -49,5 +48,4 @@ public class MemberController {
         Member member = ((Member) authentication.getPrincipal());
         return ResponseEntity.ok(new MemberRegisterResponseDto(member));
     }
->>>>>>> Stashed changes
 }
