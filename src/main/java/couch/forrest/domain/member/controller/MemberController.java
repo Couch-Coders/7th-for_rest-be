@@ -20,24 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
-    final private FirebaseAuth firebaseAuth;
     final private MemberService memberService;
 
-    @PostMapping("")
-    public MemberInfo register(@RequestHeader("Authorization") String authorization)
-    {
-        // TOKEN을 가져온다.
-        FirebaseToken decodedToken;
-        try{
-            String token = RequestUtil.getAuthorizationToken(authorization);
-            decodedToken = firebaseAuth.verifyIdToken(token);
-        } catch(IllegalArgumentException | FirebaseAuthException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
-        }
-        // 사용자를 등록한다.
-        Member registeredMember = memberService.register(
-                decodedToken.getName(), decodedToken.getEmail(), decodedToken.getPicture());
-        return new MemberInfo(registeredMember);
-    }
 }
