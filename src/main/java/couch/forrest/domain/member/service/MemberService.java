@@ -12,14 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService implements UserDetailsService {
+public class MemberService {
 
     final private MemberRepository memberRepository;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) {
-        return memberRepository.findById(username).get();
-    }
 
     @Transactional
     public Member register(String email, String name, String picture) {
