@@ -16,13 +16,13 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/place")
+@RequestMapping("/places")
 public class PlaceController {
 
     private final PlaceService placeService;
 
 
-    @GetMapping("places/{placeId}")
+    @GetMapping("{placeId}")
     public PlaceDto placeDetail(@PathVariable("placeId") Long placeId) {
         Place place = placeService.findOne(placeId).get();
 
