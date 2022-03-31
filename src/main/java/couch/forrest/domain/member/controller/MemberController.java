@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseToken;
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.member.entity.MemberInfo;
 import couch.forrest.domain.member.service.MemberService;
+import couch.forrest.oauth.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
