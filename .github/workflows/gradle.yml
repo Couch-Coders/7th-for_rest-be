@@ -32,7 +32,7 @@ jobs:
       run: chmod +x ./gradlew
         
     - name: Gradle 빌드
-      run: ./gradlew build --exclude-task test
+      run: ./gradlew build
       shell: bash
 
     - name: deploy to heroku
