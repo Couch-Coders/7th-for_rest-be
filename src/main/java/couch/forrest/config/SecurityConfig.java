@@ -2,6 +2,7 @@ package couch.forrest.config;
 
 import com.google.api.Http;
 import com.google.firebase.auth.FirebaseAuth;
+import couch.forrest.config.auth.AuthFilterContainer;
 import couch.forrest.domain.member.service.MemberService;
 import couch.forrest.filter.JwtFilter;
 import couch.forrest.filter.MockJwtFilter;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,21 +24,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private MemberService memberService;
 
-    @Autowired
-    private FirebaseAuth firebaseAuth;
+    private final AuthFilterContainer authFilterContainer;
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().authenticated().and()
-                .addFilterBefore(new MockJwtFilter(memberService),
-                        UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제
+                .csrf().disable() // csrf 보안 토큰 disable 처리.
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests() // 요청에 대한 권한 지정
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight Request 허용해주기
+                .anyRequest().authenticated() // 모든 요청이 인증되어야한다.
+                .and()
+                .addFilterBefore(authFilterContainer.getFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
