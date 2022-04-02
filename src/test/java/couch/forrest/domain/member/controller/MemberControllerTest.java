@@ -82,6 +82,6 @@ class MemberControllerTest {
                 .andExpect(jsonPath("uid").value(uid))
                 .andExpect(jsonPath("email").value(email))
                 .andExpect(jsonPath("name").value(name))
-                .andExpect(jsonPath("imgUrl").value(picture));
+                .andExpect(jsonPath("picture").value(picture));
     }
 }

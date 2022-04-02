@@ -1,8 +1,7 @@
 package couch.forrest.filter;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
+import couch.forrest.domain.member.entity.Member;
+import couch.forrest.domain.member.service.MemberService;
 import couch.forrest.exception.CustomException;
 import couch.forrest.oauth.RequestUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,20 +22,18 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter{
+public class MockJwtFilter extends OncePerRequestFilter{
 
-    private final UserDetailsService userDetailsService;
-    private final FirebaseAuth firebaseAuth;
+    private final MemberService memberService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         // get the token from the request
-        FirebaseToken decodedToken;
+        String header;
         try{
-            String header = RequestUtil.getAuthorizationToken(request.getHeader("Authorization"));
-            decodedToken = firebaseAuth.verifyIdToken(header);//디코딩한 firebase 토큰을 반환
-        } catch (FirebaseAuthException | IllegalArgumentException | CustomException e) {
+            header = RequestUtil.getAuthorizationToken(request.getHeader("Authorization"));
+        } catch (CustomException e) {
             // ErrorMessage 응답 전송
             response.setStatus(HttpStatus.SC_UNAUTHORIZED);
             response.setContentType("application/json");
@@ -46,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter{
 
         // User를 가져와 SecurityContext에 저장한다.
         try{
-            UserDetails user = userDetailsService.loadUserByUsername(decodedToken.getUid());//uid 를 통해 회원 엔티티 조회
+            Member user = memberService.loadUserByUsername(header);//user? id 를 통해 회원 엔티티 조회
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user, null, user.getAuthorities());//인증 객체 생성
             SecurityContextHolder.getContext().setAuthentication(authentication);//securityContextHolder 에 인증 객체 저장
