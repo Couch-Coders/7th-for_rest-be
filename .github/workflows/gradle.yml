@@ -32,8 +32,18 @@ jobs:
       run: chmod +x ./gradlew
         
     - name: Gradle 빌드
-      run: ./gradlew build
+      run: ./gradlew build -x test
       shell: bash
+      
+    - name: 단위 테스트 실행
+      run: SPRING_PROFILES_ACTIVE=[test] ./gradlew test
+      
+    - name: 유닛 테스트 결과 기록
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: ${{ always() }}
+      with:
+        files: build/test-results/**/*.xml
+      
 
     - name: deploy to heroku
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
