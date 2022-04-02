@@ -15,7 +15,7 @@ class PlaceRepositoryTest {
     @Autowired
     PlaceRepository placeRepository;
     
-    @Test
+    /*@Test
     public void save() throws Exception {
         //given
         Place place = Place.builder()
@@ -34,6 +34,6 @@ class PlaceRepositoryTest {
         assertThat(savedPlace.getCategory()).isEqualTo("전망대");
         assertThat(savedPlace.getRegion1()).isEqualTo("대전");
 
-    }
+    }*/
 
 }
