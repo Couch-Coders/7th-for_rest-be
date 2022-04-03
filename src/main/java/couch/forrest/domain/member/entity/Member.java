@@ -1,7 +1,10 @@
 package couch.forrest.domain.member.entity;
 
 import couch.forrest.domain.base.BaseTimeEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,10 +12,8 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity implements UserDetails {
 
     @Id
@@ -26,6 +27,14 @@ public class Member extends BaseTimeEntity implements UserDetails {
     private String name;
     private String picture;
 
+    @Builder
+    public Member(Long id, String uid, String email, String name, String picture) {
+        this.id = id;
+        this.uid = uid;
+        this.email = email;
+        this.name = name;
+        this.picture = picture;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
