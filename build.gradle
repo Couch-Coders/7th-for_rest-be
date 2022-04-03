@@ -1,8 +1,16 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.6.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
+
 
 group = 'couch'
 version = '0.0.1-SNAPSHOT'
@@ -31,7 +39,29 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 	testCompileOnly 'org.projectlombok:lombok'
+
+	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+
+	/*
+     * `NoClassDefFoundError` 관련 대응으로 필요하다.
+     */
+	annotationProcessor(
+			"jakarta.persistence:jakarta.persistence-api",
+			"jakarta.annotation:jakarta.annotation-api",
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
 }
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+		}
+	}
+}
+
+
 
 tasks.named('test') {
 	useJUnitPlatform()
