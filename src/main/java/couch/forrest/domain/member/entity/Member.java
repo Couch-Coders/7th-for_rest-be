@@ -8,17 +8,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Member extends BaseTimeEntity implements UserDetails {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
+    @Column(nullable = false, unique = true)
     private String uid;
+    @Column(nullable = false, unique = true)
     private String email;
     private String name;
     private String picture;
