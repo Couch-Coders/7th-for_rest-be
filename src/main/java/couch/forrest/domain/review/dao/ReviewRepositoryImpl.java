@@ -20,7 +20,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom{
         QReview review = QReview.review;
 
         return queryFactory.selectFrom(review).
-        where(review.placeId.eq(placeId))
+        where(review.id.eq(placeId))
                 .fetch();
     }
 }
