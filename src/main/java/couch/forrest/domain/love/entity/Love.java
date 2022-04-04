@@ -1,6 +1,8 @@
 package couch.forrest.domain.love.entity;
 
 import couch.forrest.domain.base.BaseTimeEntity;
+import couch.forrest.domain.member.entity.Member;
+import couch.forrest.domain.place.entity.Place;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,17 +17,20 @@ public class Love extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="love_id")
-    private long loveId;
-    @Column(name="member_id")
-    private long memberId;
-    @Column(name="place_id")
-    private long placeId;
+    private long id; //Spring data Jpa Repository [findById] 사용
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
 
     @Builder
-    public Love(long loveId, long memberId, long placeId) {
-        this.loveId = loveId;
-        this.memberId = memberId;
-        this.placeId = placeId;
+    public Love(long id, Member member, Place place) {
+        this.id = id;
+        this.member = member;
+        this.place = place;
     }
-
 }
