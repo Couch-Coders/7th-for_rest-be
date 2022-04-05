@@ -13,9 +13,7 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-18.04
-
+    runs-on: ubuntu-latest
     steps:
     - name: checkout backend
       uses: actions/checkout@v2
