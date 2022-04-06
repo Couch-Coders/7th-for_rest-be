@@ -1,6 +1,8 @@
 package couch.forrest.domain.review.entity;
 
 import couch.forrest.domain.base.BaseTimeEntity;
+import couch.forrest.domain.member.entity.Member;
+import couch.forrest.domain.place.entity.Place;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,25 +18,29 @@ public class Review extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="review_id")
-    private Long reviewId;
+    private Long id;
     private String image;
     private String content;
     @Column(name="review_rating")
     private Double reviewRating;
-    @Column(name="member_id",nullable = false, unique = true)
-    private Long memberId;
-    @Column(name="place_id",nullable = false, unique = true)
-    private Long placeId;
+
+    @ManyToOne(fetch = FetchType.LAZY) //레이지 로딩
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
 
 
     @Builder
-    public Review(Long reviewId, String image, String content, Double reviewRating, Long memberId, Long placeId) {
-        this.reviewId = reviewId;
+    public Review(Long id, String image, String content, Double reviewRating, Member member, Place place) {
+        this.id = id;
         this.image = image;
         this.content = content;
         this.reviewRating = reviewRating;
-        this.memberId = memberId;
-        this.placeId = placeId;
+        this.member = member;
+        this.place = place;
     }
-
 }

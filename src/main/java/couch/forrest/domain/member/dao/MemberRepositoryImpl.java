@@ -26,10 +26,10 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         List<Place> result = queryFactory
                 .selectFrom(place)
                 .rightJoin(love)
-                .on(place.id.eq(love.placeId))
+                .on(place.id.eq(love.id))
                 .join(member)
-                .on(love.memberId.eq(member.id))
-                .where(love.memberId.eq(memberId))
+                .on(love.id.eq(member.id))
+                .where(love.id.eq(memberId))
                 .fetch();
 
 
