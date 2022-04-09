@@ -59,6 +59,7 @@ jobs:
         cd ..
         mkdir src/main/resources/static/
         cp -r frontend/build/* src/main/resources/static/
+        heroku git:remote -a for-rest
       env:   
         CI: ""
       
