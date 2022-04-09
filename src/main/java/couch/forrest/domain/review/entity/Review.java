@@ -23,11 +23,13 @@ public class Review extends BaseTimeEntity {
     private String content;
     @Column(name="review_rating")
     private Double reviewRating;
+    private String picture;
 
     @ManyToOne(fetch = FetchType.LAZY) //레이지 로딩
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
@@ -35,12 +37,22 @@ public class Review extends BaseTimeEntity {
 
 
     @Builder
-    public Review(Long id, String image, String content, Double reviewRating, Member member, Place place) {
+    public Review(Long id, String image,String name,
+                  String content, Double reviewRating,
+                  Member member, Place place, String picture) {
+        this.picture = picture;
         this.id = id;
         this.image = image;
+        this.name = name;
         this.content = content;
         this.reviewRating = reviewRating;
         this.member = member;
         this.place = place;
+    }
+
+    public void update(String image, String content, double reviewRating) {
+        this.image = image;
+        this.content = content;
+        this.reviewRating = reviewRating;
     }
 }
