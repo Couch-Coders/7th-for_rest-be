@@ -59,7 +59,6 @@ jobs:
         cd ..
         mkdir src/main/resources/static/
         cp -r frontend/build/* src/main/resources/static/
-        heroku git:remote -a for-rest
       env:   
         CI: ""
       
@@ -68,6 +67,5 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "for-rest" #Must be unique in Heroku
+        heroku_app_name: "for-rest-7th" #Must be unique in Heroku
         heroku_email: "tj4643@hanmail.net"
-        remote_branch: "main"
