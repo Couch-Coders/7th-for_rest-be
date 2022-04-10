@@ -40,8 +40,8 @@ jobs:
       run: ./gradlew build -x test
       shell: bash
       
-#     - name: 단위 테스트 실행
-#       run: SPRING_PROFILES_ACTIVE=[test] ./gradlew test
+    - name: 단위 테스트 실행
+      run: SPRING_PROFILES_ACTIVE=[test] ./gradlew test
       
 #     - name: 유닛 테스트 결과 기록
 #       uses: EnricoMi/publish-unit-test-result-action@v1
