@@ -6,3 +6,17 @@
 #  auth:
 #    tokenSecret: secretkeysecretkeysecretkeysecretkeysecretkeysecretkey
 #    tokenExpiry: 2592000000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: forrest123
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true

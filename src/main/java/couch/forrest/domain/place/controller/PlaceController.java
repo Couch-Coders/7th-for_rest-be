@@ -1,8 +1,10 @@
 package couch.forrest.domain.place.controller;
 
 
+import couch.forrest.domain.place.dto.response.PlaceResponseDto;
 import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.place.service.PlaceService;
+import couch.forrest.exception.place.NotFoundPlaceException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -23,25 +25,14 @@ public class PlaceController {
 
 
     @GetMapping("{placeId}")
-    public PlaceDto placeDetail(@PathVariable("placeId") Long placeId) {
-        Place place = placeService.findOne(placeId).get();
+    public PlaceResponseDto placeDetail(@PathVariable("placeId") Long placeId) {
+        Place place = placeService.findOne(placeId).orElseThrow(() -> new NotFoundPlaceException("존재하지 않는 place_id 입니다. place_id : " + placeId));
 
-        PlaceDto placeDto = new PlaceDto(place.getName(), place.getAddress(), place.getRegion1(),
-                place.getRegion2(), place.getCategory());
-
-        return placeDto;
+        return PlaceResponseDto.toDto(place);
     }
 
 
-    @Data
-    @AllArgsConstructor
-    static class PlaceDto {
-        private String name;
-        private String address;
-        private String region1;
-        private String region2;
-        private String category;
 
-    }
+
 
 }

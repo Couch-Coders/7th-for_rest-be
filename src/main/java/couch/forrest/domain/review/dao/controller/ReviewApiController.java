@@ -1,4 +1,4 @@
-package couch.forrest.domain.review.controller;
+package couch.forrest.domain.review.dao.controller;
 
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
