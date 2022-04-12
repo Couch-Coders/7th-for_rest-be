@@ -1,9 +1,14 @@
 package couch.forrest.domain.place.dao;
 
+import couch.forrest.domain.place.dto.request.PlaceRequestDto;
 import couch.forrest.domain.place.entity.Place;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,26 +19,28 @@ class PlaceRepositoryTest {
 
     @Autowired
     PlaceRepository placeRepository;
-    
-    /*@Test
-    public void save() throws Exception {
+
+    @Test
+    @Transactional
+    public void findPlaceList() {
         //given
         Place place = Place.builder()
-                .name("디아트스페이스 193")
-                .category("전망대")
-                .region1("대전")
-                .region2("유성구")
-                .address("대전 유성구 엑스포로 1")
+                .name("롯데월드")
+                .category("테마파크")
+                .region1("서울")
+                .region2("송파구")
                 .build();
+        placeRepository.save(place);
 
         //when
-        Place savedPlace = placeRepository.save(place);
-
+        PlaceRequestDto dto = new PlaceRequestDto("테마파크", "서울", "송파구");
+        List<Place> places = placeRepository
+                .findAllByCategoryAndRegion1AndRegion2(
+                        dto.getCategory(),
+                        dto.getRegion1(),
+                        dto.getRegion2());
         //then
-        assertThat(savedPlace.getName()).isEqualTo("디아트스페이스 193");
-        assertThat(savedPlace.getCategory()).isEqualTo("전망대");
-        assertThat(savedPlace.getRegion1()).isEqualTo("대전");
-
-    }*/
+        Assertions.assertThat(places.get(0).getName()).isEqualTo("롯데월드");
+    }
 
 }
