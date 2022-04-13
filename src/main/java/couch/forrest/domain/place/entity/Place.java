@@ -32,6 +32,7 @@ public class Place extends BaseTimeEntity {
     @Column(name = "like_count")
     private Long likeCount;
 
+    @Column(name = "placeinfo")
     private String info;
 
     @Column(name = "img_src")
@@ -50,8 +51,10 @@ public class Place extends BaseTimeEntity {
 
     private String wayinfo;
 
+    @Column(name = "region_1")
     private String region1;
 
+    @Column(name = "region_2")
     private String region2;
 
     private String category;
@@ -61,4 +64,26 @@ public class Place extends BaseTimeEntity {
     @Column(name = "view_count")
     private Long viewCount;
 
+
+    @Builder
+    public Place(Long id, String name, String tag, String cost, String wayinfo,Double averageRating, Integer latitude, Integer longitude, long likeCount, String info, String image, String phone, String operatingHours, String region1, String region2, String category, String address, long viewCount) {
+        this.id = id;
+        this.tag = tag;
+        this.cost = cost;
+        this.wayinfo = wayinfo;
+        this.name = name;
+        this.averageRating = averageRating;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.likeCount = likeCount;
+        this.info = info;
+        this.image = image;
+        this.phone = phone;
+        this.operatingHours = operatingHours;
+        this.region1 = region1;
+        this.region2 = region2;
+        this.category = category;
+        this.address = address;
+        this.viewCount = viewCount;
+    }
 }
