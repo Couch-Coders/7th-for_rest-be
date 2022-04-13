@@ -38,19 +38,28 @@ public class Place extends BaseTimeEntity {
     @Column(name = "img_src")
     private String image;
 
+<<<<<<< HEAD
     private String link_url;
+=======
+    private String tag;
+    private String cost;
+    private String wayinfo;
+>>>>>>> fixPlace
 
     private String phone;
 
     @Column(name = "openhours")
     private String operatingHours;
 
+<<<<<<< HEAD
     private String cost;
 
     private String tag;
 
     private String wayinfo;
 
+=======
+>>>>>>> fixPlace
     @Column(name = "region_1")
     private String region1;
 
@@ -66,7 +75,11 @@ public class Place extends BaseTimeEntity {
 
 
     @Builder
+<<<<<<< HEAD
     public Place(Long id, String name, String tag, String cost, String wayinfo,Double averageRating, Integer latitude, Integer longitude, long likeCount, String info, String image, String phone, String operatingHours, String region1, String region2, String category, String address, long viewCount) {
+=======
+    public Place(Long id, String name, String tag, String cost, String wayinfo,Double averageRating, Integer latitude, Integer longitude, Integer likeCount, String info, String image, String phone, String operatingHours, String region1, String region2, String category, String address, Integer viewCount) {
+>>>>>>> fixPlace
         this.id = id;
         this.tag = tag;
         this.cost = cost;
