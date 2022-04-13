@@ -38,7 +38,7 @@ public class PlaceResponseDto {
                 .region1(place.getRegion1())
                 .region2(place.getRegion2())
                 .category(place.getCategory())
-                .info(place.getInfo())
+                .info(place.getPlaceinfo())
                 .cost(place.getCost())
                 .img_src(place.getImage())
                 .openHours(place.getOperatingHours())
