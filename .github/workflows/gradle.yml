@@ -50,16 +50,16 @@ jobs:
 #         files: build/test-results/**/*.xml
 #
 
-#    - name: build frontend to resources
-#      run: |
-#        cd frontend
-#        npm install
-#        npm run build
-#        cd ..
-#        mkdir src/main/resources/static/
-#        cp -r frontend/build/* src/main/resources/static/
-#      env:
-#        CI: ""
+    - name: build frontend to resources
+      run: |
+        cd frontend
+        npm install
+        npm run build
+        cd ..
+        mkdir src/main/resources/static/
+        cp -r frontend/build/* src/main/resources/static/
+      env:   
+        CI: ""
       
 
     - name: deploy to heroku
