@@ -22,14 +22,14 @@ public class ReviewApiController {
     }
 
     @PatchMapping("/reviews/{reviewId}")
-    public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto)
+    public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member)
     {
-        return reviewService.update(id, requestDto);
+        return reviewService.update(id, requestDto,member);
     }
 
     @DeleteMapping("/reviews/{reviewId}")
-    public Long delete(@PathVariable Long id) {
-        reviewService.delete(id);
+    public Long delete(@PathVariable Long id, @AuthenticationPrincipal Member member) {
+        reviewService.delete(id,member);
         return id;
     }
 
