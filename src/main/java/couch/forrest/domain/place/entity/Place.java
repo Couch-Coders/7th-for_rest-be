@@ -26,28 +26,34 @@ public class Place extends BaseTimeEntity {
     @Column(name = "average_rating")
     private Double averageRating;
 
-    private Integer latitude;
-    private Integer longitude;
+    private Double latitude;
+    private Double longitude;
 
     @Column(name = "like_count")
     private Long likeCount;
 
-    private String info;
 
-    @Column(name = "img_src")
+    @Column(columnDefinition="TEXT", length = 2048)
+    private String placeinfo;
+
+    @Column(name = "img_src",length = 1000)
     private String image;
 
+    @Column(columnDefinition="TEXT", length = 1000)
     private String link_url;
 
     private String phone;
 
-    @Column(name = "openhours")
+    @Column(name = "openhours",columnDefinition="TEXT", length = 2048)
     private String operatingHours;
 
+    @Column(columnDefinition="TEXT", length = 2048)
     private String cost;
 
+    @Column(columnDefinition="TEXT", length = 2048)
     private String tag;
 
+    @Column(columnDefinition="TEXT", length = 2048)
     private String wayinfo;
 
     private String region1;
