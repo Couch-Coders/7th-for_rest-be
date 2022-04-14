@@ -1,8 +1,10 @@
-package couch.forrest.domain.place.service;
+package couch.forrest.domain.place.controller;
 
 import couch.forrest.domain.place.dao.PlaceRepository;
 import couch.forrest.domain.place.dto.request.PlaceRequestDto;
+import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.domain.place.entity.Place;
+import couch.forrest.domain.place.service.PlaceService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +15,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest
-class PlaceServiceTest {
+@Transactional
+class PlaceControllerTest {
 
+    @Autowired
+    PlaceService placeService;
 
     @Autowired
     PlaceRepository placeRepository;
 
     @Autowired
-    PlaceService placeService;
+    PlaceController placeController;
+
 
     @Test
-    @Transactional
-    public void 장소_리스트_반환() throws Exception {
+    public void 리스트_반환_API() throws Exception {
         //given
         Place place = Place.builder()
                 .name("롯데월드")
@@ -46,14 +50,11 @@ class PlaceServiceTest {
 
         //when
         PlaceRequestDto dto = new PlaceRequestDto("테마파크", "서울", "송파구");
-        List<Place> placeList = placeService.findPlaceList(dto);
+        List<PlaceListResponseDto> placeDtoList = placeController.getPlaceList(dto);
+
 
         //then
-        Assertions.assertThat(placeList.size()).isEqualTo(2);
-
+        Assertions.assertThat(placeDtoList.size()).isEqualTo(2);
+        Assertions.assertThat(placeDtoList.get(0).getName()).isEqualTo("롯데월드");
     }
-
-
-
-
 }
