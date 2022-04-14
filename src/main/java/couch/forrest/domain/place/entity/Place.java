@@ -68,6 +68,6 @@ public class Place extends BaseTimeEntity {
     private String address;
 
     @Column(name = "view_count")
-    private Long viewCount;
+    private Integer viewCount;
 
 }
