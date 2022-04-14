@@ -41,11 +41,14 @@ public class ReviewService {
         return reviewRepository.save(review).getId();
     }
 
-    public Long update(Long id, ReviewSaveRequestDto requestDto)
+    public Long update(Long id, ReviewSaveRequestDto requestDto, Member member)
     {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰는 존제하지 않습니다. id="+id));
 
+        if (review.getMember().getId() != member.getId()){
+            throw new IllegalArgumentException(ErrorCode.FORBIDDEN_USER.getDetail());
+        }
         review.update(requestDto.getImage()
         ,requestDto.getContent()
         ,requestDto.getReviewRating());
@@ -53,11 +56,13 @@ public class ReviewService {
         return id;
     }
 
-    public void delete(Long id)
+    public void delete(Long id, Member member)
     {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰는 존제하지 않습니다. id="+id));
-
+        if (review.getMember().getId() != member.getId()){
+            throw new IllegalArgumentException(ErrorCode.FORBIDDEN_USER.getDetail());
+        }
         reviewRepository.delete(review);
     }
 

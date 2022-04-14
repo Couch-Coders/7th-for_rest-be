@@ -33,11 +33,13 @@ public class Place extends BaseTimeEntity {
     private Long likeCount;
 
 
+
     @Column(columnDefinition="TEXT", length = 2048)
     private String placeinfo;
 
     @Column(name = "img_src",length = 1000)
     private String image;
+
 
     @Column(columnDefinition="TEXT", length = 1000)
     private String link_url;
@@ -58,6 +60,7 @@ public class Place extends BaseTimeEntity {
 
     private String region1;
 
+    @Column(name = "region_2")
     private String region2;
 
     private String category;
@@ -65,6 +68,6 @@ public class Place extends BaseTimeEntity {
     private String address;
 
     @Column(name = "view_count")
-    private Long viewCount;
+    private Integer viewCount;
 
 }
