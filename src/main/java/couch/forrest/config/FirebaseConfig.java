@@ -1,9 +1,11 @@
 package couch.forrest.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.cloud.StorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,4 +31,14 @@ public class FirebaseConfig {
         FirebaseApp app = FirebaseApp.initializeApp(options);
         return app;
     }
+
+    @Bean
+    public FirebaseAuth firebaseAuth() throws IOException {
+        return FirebaseAuth.getInstance(firebaseApp());
+    }
+
+//    @Bean
+//    public Bucket bucket() throws IOException {
+//        return StorageClient.getInstance(firebaseApp()).bucket();
+//    }
 }
