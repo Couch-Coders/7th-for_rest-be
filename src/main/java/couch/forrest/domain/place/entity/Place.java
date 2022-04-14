@@ -26,18 +26,21 @@ public class Place extends BaseTimeEntity {
     @Column(name = "average_rating")
     private Double averageRating;
 
-    private Integer latitude;
-    private Integer longitude;
+    private Double latitude;
+    private Double longitude;
 
     @Column(name = "like_count")
     private Long likeCount;
 
-    @Column(name = "placeinfo")
-    private String info;
 
-    @Column(name = "img_src")
+
+    @Column(columnDefinition="TEXT", length = 2048)
+    private String placeinfo;
+
+    @Column(name = "img_src",length = 1000)
     private String image;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     private String link_url;
 =======
@@ -45,25 +48,38 @@ public class Place extends BaseTimeEntity {
     private String cost;
     private String wayinfo;
 >>>>>>> fixPlace
+=======
+
+    @Column(columnDefinition="TEXT", length = 1000)
+    private String link_url;
+>>>>>>> main
 
     private String phone;
 
-    @Column(name = "openhours")
+    @Column(name = "openhours",columnDefinition="TEXT", length = 2048)
     private String operatingHours;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    @Column(columnDefinition="TEXT", length = 2048)
+>>>>>>> main
     private String cost;
 
+    @Column(columnDefinition="TEXT", length = 2048)
     private String tag;
 
+    @Column(columnDefinition="TEXT", length = 2048)
     private String wayinfo;
 
+<<<<<<< HEAD
 =======
 >>>>>>> fixPlace
     @Column(name = "region_1")
+=======
+>>>>>>> main
     private String region1;
 
-    @Column(name = "region_2")
     private String region2;
 
     private String category;
@@ -73,6 +89,7 @@ public class Place extends BaseTimeEntity {
     @Column(name = "view_count")
     private Long viewCount;
 
+<<<<<<< HEAD
 
     @Builder
 <<<<<<< HEAD
@@ -99,4 +116,6 @@ public class Place extends BaseTimeEntity {
         this.address = address;
         this.viewCount = viewCount;
     }
+=======
+>>>>>>> main
 }
