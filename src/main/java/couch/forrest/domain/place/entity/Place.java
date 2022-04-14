@@ -2,10 +2,7 @@ package couch.forrest.domain.place.entity;
 
 
 import couch.forrest.domain.base.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +12,8 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
 public class Place extends BaseTimeEntity {
 
     @Id @GeneratedValue
@@ -27,27 +26,38 @@ public class Place extends BaseTimeEntity {
     @Column(name = "average_rating")
     private Double averageRating;
 
-    private Integer latitude;
-    private Integer longitude;
+    private Double latitude;
+    private Double longitude;
 
     @Column(name = "like_count")
-    private Integer likeCount;
+    private Long likeCount;
 
-    @Column(name = "placeinfo")
-    private String info;
 
+
+    @Column(columnDefinition="TEXT", length = 2048)
+    private String placeinfo;
+
+    @Column(name = "img_src",length = 1000)
     private String image;
 
-    private String tag;
-    private String cost;
-    private String wayinfo;
+
+    @Column(columnDefinition="TEXT", length = 1000)
+    private String link_url;
 
     private String phone;
 
-    @Column(name = "openhours")
+    @Column(name = "openhours",columnDefinition="TEXT", length = 2048)
     private String operatingHours;
 
-    @Column(name = "region_1")
+    @Column(columnDefinition="TEXT", length = 2048)
+    private String cost;
+
+    @Column(columnDefinition="TEXT", length = 2048)
+    private String tag;
+
+    @Column(columnDefinition="TEXT", length = 2048)
+    private String wayinfo;
+
     private String region1;
 
     @Column(name = "region_2")
@@ -58,27 +68,6 @@ public class Place extends BaseTimeEntity {
     private String address;
 
     @Column(name = "view_count")
-    private Integer viewCount;
+    private Long viewCount;
 
-    @Builder
-    public Place(Long id, String name, String tag, String cost, String wayinfo,Double averageRating, Integer latitude, Integer longitude, Integer likeCount, String info, String image, String phone, String operatingHours, String region1, String region2, String category, String address, Integer viewCount) {
-        this.id = id;
-        this.tag = tag;
-        this.cost = cost;
-        this.wayinfo = wayinfo;
-        this.name = name;
-        this.averageRating = averageRating;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.likeCount = likeCount;
-        this.info = info;
-        this.image = image;
-        this.phone = phone;
-        this.operatingHours = operatingHours;
-        this.region1 = region1;
-        this.region2 = region2;
-        this.category = category;
-        this.address = address;
-        this.viewCount = viewCount;
-    }
 }
