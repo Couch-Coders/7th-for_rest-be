@@ -60,6 +60,7 @@ public class Place extends BaseTimeEntity {
 
     private String region1;
 
+    @Column(name = "region_2")
     private String region2;
 
     private String category;

@@ -27,8 +27,8 @@ public class PlaceResponseDto {
     private String link_url;
 
 
-    private Long likeCount;
-    private Long viewCount;
+//    private Long likeCount;
+//    private Long viewCount;
 
     public static PlaceResponseDto toDto(Place place) {
         return PlaceResponseDto.builder()
@@ -41,14 +41,13 @@ public class PlaceResponseDto {
                 .info(place.getPlaceinfo())
                 .cost(place.getCost())
                 .img_src(place.getImage())
-                .contact(place.getPhone())
                 .openHours(place.getOperatingHours())
                 .cost(place.getCost())
                 .tag(place.getTag())
                 .wayinfo(place.getWayinfo())
                 .link_url(place.getLink_url())
-                .likeCount(place.getLikeCount())
-                .viewCount(place.getViewCount())
+//                .likeCount(place.getLikeCount())
+//                .viewCount(place.getViewCount())
                 .build();
     }
 

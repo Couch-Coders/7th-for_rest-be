@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,18 +24,11 @@ public class PlaceService {
     }
 
     public List<Place> findPlaceList(PlaceRequestDto dto) {
-        List<Place> places = new ArrayList<>();
-        String[] region2Arr = dto.getRegion2().split("-");
-
-        for (String region2 : region2Arr) {
-            List<Place> placesTemp = placeRepository.
-                    findAllByCategoryAndRegion1AndRegion2(
-                            dto.getCategory(),
-                            dto.getRegion1(),
-                            region2);
-
-            places.addAll(placesTemp);
-        }
+        List<Place> places = placeRepository.
+                findAllByCategoryAndRegion1AndRegion2(
+                        dto.getCategory(),
+                        dto.getRegion1(),
+                        dto.getRegion2());
         return places;
     }
 

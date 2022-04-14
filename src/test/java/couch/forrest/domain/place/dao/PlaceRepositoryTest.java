@@ -21,7 +21,7 @@ class PlaceRepositoryTest {
     PlaceRepository placeRepository;
 
     @Test
-//    @Transactional
+    @Transactional
     public void findPlaceList() {
         //given
         Place place = Place.builder()

@@ -1,8 +1,6 @@
 package couch.forrest.domain.place.controller;
 
 
-import couch.forrest.domain.place.dto.request.PlaceRequestDto;
-import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.domain.place.dto.response.PlaceResponseDto;
 import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.place.service.PlaceService;
@@ -11,10 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,16 +31,5 @@ public class PlaceController {
         return PlaceResponseDto.toDto(place);
     }
 
-    @GetMapping("list")
-    public List<PlaceListResponseDto> getPlaceList(@ModelAttribute PlaceRequestDto dto) {
 
-        List<Place> placeList = placeService.findPlaceList(dto);
-
-        List<PlaceListResponseDto> dtoList = new ArrayList<>();
-        for (Place place : placeList) {
-            dtoList.add(PlaceListResponseDto.toDto(place));
-        }
-
-        return dtoList;
-    }
 }
