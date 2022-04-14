@@ -30,6 +30,7 @@ public class PlaceResponseDto {
     private Long likeCount;
     private Long viewCount;
 
+    
     public static PlaceResponseDto toDto(Place place) {
         return PlaceResponseDto.builder()
                 .id(place.getId())
