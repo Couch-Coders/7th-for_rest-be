@@ -18,13 +18,4 @@ public class PlaceRequestDto {
     private String region2;
 
 
-    public Place toEntity() {
-        return Place.builder()
-                .category(category)
-                .region1(region1)
-                .region2(region2)
-                .build();
-    }
-
-
 }

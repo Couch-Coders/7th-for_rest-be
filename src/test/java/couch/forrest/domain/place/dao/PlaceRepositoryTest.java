@@ -21,7 +21,7 @@ class PlaceRepositoryTest {
     PlaceRepository placeRepository;
 
     @Test
-//    @Transactional
+    @Transactional
     public void findPlaceList() {
         //given
         Place place = Place.builder()
@@ -32,15 +32,30 @@ class PlaceRepositoryTest {
                 .build();
         placeRepository.save(place);
 
+        place = Place.builder()
+                .name("동작랜드")
+                .category("테마파크")
+                .region1("서울")
+                .region2("동작구")
+                .build();
+        placeRepository.save(place);
+
         //when
-        PlaceRequestDto dto = new PlaceRequestDto("테마파크", "서울", "송파구");
-        List<Place> places = placeRepository
-                .findAllByCategoryAndRegion1AndRegion2(
-                        dto.getCategory(),
-                        dto.getRegion1(),
-                        dto.getRegion2());
+        PlaceRequestDto dto = new PlaceRequestDto("테마파크", "서울", "송파구-동작구");
+//        List<Place> places = placeRepository
+//                .findAllByCategoryAndRegion1AndRegion2In(
+//                        dto.getCategory(),
+//                        dto.getRegion1(),
+//
+//
+//
+//                );
+
         //then
-        Assertions.assertThat(places.get(0).getName()).isEqualTo("롯데월드");
+//        Assertions.assertThat(places.get(0).getName()).isEqualTo("롯데월드");
+//        Assertions.assertThat(places.get(1).getName()).isEqualTo("동작랜드");
+//        Assertions.assertThat(places.size()).isEqualTo(2);
+
     }
 
 }
