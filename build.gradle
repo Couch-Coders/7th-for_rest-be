@@ -38,9 +38,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.0.1'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 	testCompileOnly 'org.projectlombok:lombok'
-
+	annotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 
