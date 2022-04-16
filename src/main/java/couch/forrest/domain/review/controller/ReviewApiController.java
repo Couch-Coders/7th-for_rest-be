@@ -1,4 +1,4 @@
-package couch.forrest.domain.review.dao.controller;
+package couch.forrest.domain.review.controller;
 
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
@@ -16,11 +16,13 @@ import java.util.List;
 public class ReviewApiController {
     private final ReviewService reviewService;
 
+    @ResponseBody
     @PostMapping("/reviews")
     public Long save(@RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member) {
         return reviewService.save(requestDto, member);
     }
 
+    @ResponseBody
     @PatchMapping("/reviews/{reviewId}")
     public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member)
     {

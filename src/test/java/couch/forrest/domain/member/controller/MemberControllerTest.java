@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,6 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+@WebAppConfiguration
 @TestPropertySource(properties = {"spring.config.location=classpath:application-test.properties"})
 @Slf4j
 @Transactional
@@ -53,12 +56,12 @@ class MemberControllerTest {
     @Autowired
     private Filter springSecurityFilterChain;
 
-
+    /*
     public void beforeEach() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
                 .addFilter(springSecurityFilterChain)
                 .build();
-    }
+    }*/
 
 
 
@@ -83,5 +86,6 @@ class MemberControllerTest {
                 .andExpect(jsonPath("email").value(email))
                 .andExpect(jsonPath("name").value(name))
                 .andExpect(jsonPath("picture").value(picture));
+
     }
 }
