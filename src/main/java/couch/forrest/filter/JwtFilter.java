@@ -27,9 +27,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter{
 
-    private final UserDetailsService userDetailsService;
-    private final FirebaseAuth firebaseAuth;
     private final MemberService memberService;
+    private final FirebaseAuth firebaseAuth;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -49,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter{
 
         // User를 가져와 SecurityContext에 저장한다.
         try{
-            UserDetails user = userDetailsService.loadUserByUsername(decodedToken.getUid());//uid 를 통해 회원 엔티티 조회
+            UserDetails user = memberService.loadUserByUsername(decodedToken.getUid());//uid 를 통해 회원 엔티티 조회
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user, null, user.getAuthorities());//인증 객체 생성
             SecurityContextHolder.getContext().setAuthentication(authentication);//securityContextHolder 에 인증 객체 저장
@@ -59,7 +58,7 @@ public class JwtFilter extends OncePerRequestFilter{
                     decodedToken.getName(), decodedToken.getEmail(), decodedToken.getPicture(), decodedToken.getUid());
 
             try{
-                UserDetails user = userDetailsService.loadUserByUsername(decodedToken.getUid());//uid 를 통해 회원 엔티티 조회
+                UserDetails user = memberService.loadUserByUsername(decodedToken.getUid());//uid 를 통해 회원 엔티티 조회
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         user, null, user.getAuthorities());//인증 객체 생성
                 SecurityContextHolder.getContext().setAuthentication(authentication);//securityContextHolder 에 인증 객체 저장
