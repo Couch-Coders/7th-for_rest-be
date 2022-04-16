@@ -3,8 +3,11 @@ package couch.forrest.domain.place.service;
 
 import couch.forrest.domain.place.dao.PlaceRepository;
 import couch.forrest.domain.place.dto.request.PlaceRequestDto;
+import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.domain.place.entity.Place;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,20 +27,23 @@ public class PlaceService {
         return placeRepository.findById(placeId);
     }
 
-    public List<Place> findPlaceList(PlaceRequestDto dto) {
+    public Page<PlaceListResponseDto> findPlaceList(PlaceRequestDto dto, Pageable pageable) {
         List<Place> places = new ArrayList<>();
         String[] region2Arr = dto.getRegion2().split("-");
 
-        for (String region2 : region2Arr) {
-            List<Place> placesTemp = placeRepository.
-                    findAllByCategoryAndRegion1AndRegion2(
-                            dto.getCategory(),
-                            dto.getRegion1(),
-                            region2);
+//        for (String region2 : region2Arr) {
+        Page<PlaceListResponseDto> placeDtos = placeRepository.
+                findAllByCategoryAndRegion1AndRegion2In(
+                        pageable,
+                        dto.getCategory(),
+                        dto.getRegion1(),
+                        region2Arr).map(PlaceListResponseDto::toDto);
 
-            places.addAll(placesTemp);
-        }
-        return places;
+//            places.addAll(placesTemp);
+//        }
+//        Page<Place> a = new Page<Place>(places);
+
+        return placeDtos;
     }
 
 

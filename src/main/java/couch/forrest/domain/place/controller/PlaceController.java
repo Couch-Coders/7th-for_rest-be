@@ -10,6 +10,8 @@ import couch.forrest.exception.place.NotFoundPlaceException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,15 +35,15 @@ public class PlaceController {
     }
 
     @GetMapping("list")
-    public List<PlaceListResponseDto> getPlaceList(@ModelAttribute PlaceRequestDto dto) {
+    public Page<PlaceListResponseDto> getPlaceList(@ModelAttribute PlaceRequestDto dto, Pageable pageable) {
 
-        List<Place> placeList = placeService.findPlaceList(dto);
+//        Page<Place> placeList = placeService.findPlaceList(dto,pageable);
 
-        List<PlaceListResponseDto> dtoList = new ArrayList<>();
-        for (Place place : placeList) {
-            dtoList.add(PlaceListResponseDto.toDto(place));
-        }
+//        List<PlaceListResponseDto> dtoList = new ArrayList<>();
+//        for (Place place : placeList) {
+//            dtoList.add(PlaceListResponseDto.toDto(place));
+//        }
 
-        return dtoList;
+        return placeService.findPlaceList(dto,pageable);
     }
 }
