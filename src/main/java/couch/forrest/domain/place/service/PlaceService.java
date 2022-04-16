@@ -34,7 +34,7 @@ public class PlaceService {
                         pageable,
                         dto.getCategory(),
                         dto.getRegion1(),
-                        region2Arr).map(PlaceListResponseDto::toDto);;
+                        region2Arr).map(PlaceListResponseDto::toDto);
     }
 
 
