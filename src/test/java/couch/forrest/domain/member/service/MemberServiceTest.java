@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@WebAppConfiguration
 @TestPropertySource(properties = {"spring.config.location=classpath:application-test.properties"})
 @Slf4j
 @Transactional
@@ -43,7 +45,6 @@ class MemberServiceTest {
             assertThat(members.get(i).getName()).isEqualTo(name);
             assertThat(members.get(i).getPicture()).isEqualTo(picture);
         }
-        //Member member = memberService.findByEmail(email);
         Member member = memberService.findByUid(uid);
 
         assertThat(member.getUid()).isEqualTo(uid);
