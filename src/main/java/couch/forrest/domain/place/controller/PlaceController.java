@@ -36,14 +36,6 @@ public class PlaceController {
 
     @GetMapping("list")
     public Page<PlaceListResponseDto> getPlaceList(@ModelAttribute PlaceRequestDto dto, Pageable pageable) {
-
-//        Page<Place> placeList = placeService.findPlaceList(dto,pageable);
-
-//        List<PlaceListResponseDto> dtoList = new ArrayList<>();
-//        for (Place place : placeList) {
-//            dtoList.add(PlaceListResponseDto.toDto(place));
-//        }
-
         return placeService.findPlaceList(dto,pageable);
     }
 }

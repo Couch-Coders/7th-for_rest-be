@@ -28,22 +28,13 @@ public class PlaceService {
     }
 
     public Page<PlaceListResponseDto> findPlaceList(PlaceRequestDto dto, Pageable pageable) {
-        List<Place> places = new ArrayList<>();
         String[] region2Arr = dto.getRegion2().split("-");
-
-//        for (String region2 : region2Arr) {
-        Page<PlaceListResponseDto> placeDtos = placeRepository.
+        return placeRepository.
                 findAllByCategoryAndRegion1AndRegion2In(
                         pageable,
                         dto.getCategory(),
                         dto.getRegion1(),
-                        region2Arr).map(PlaceListResponseDto::toDto);
-
-//            places.addAll(placesTemp);
-//        }
-//        Page<Place> a = new Page<Place>(places);
-
-        return placeDtos;
+                        region2Arr).map(PlaceListResponseDto::toDto);;
     }
 
 
