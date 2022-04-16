@@ -61,7 +61,7 @@ public class MemberController {
     }
 
     //로그인 파이어베이스 인증 토큰을 Header 에 넣어 로그인을 요청합니다.
-    @GetMapping("/me")
+    @GetMapping("/login")
     public ResponseEntity<MemberRegisterResponseDto> login(Authentication authentication) {
         Member member = ((Member) authentication.getPrincipal());
         return ResponseEntity.ok(new MemberRegisterResponseDto(member));
