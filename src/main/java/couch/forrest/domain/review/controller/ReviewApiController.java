@@ -12,17 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class ReviewApiController {
     private final ReviewService reviewService;
 
-    @ResponseBody
     @PostMapping("/reviews")
     public Long save(@RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member) {
         return reviewService.save(requestDto, member);
     }
 
-    @ResponseBody
     @PatchMapping("/reviews/{reviewId}")
     public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member)
     {
