@@ -69,14 +69,14 @@ class ReviewApiControllerTest {
     private static ReviewSaveRequestDto reviewSaveRequestDto =
             ReviewSaveRequestDto.builder()
                     .content("안녕하세요 반가워요 잘있어요 다시만나요")
-                    .place(place)
+                    .placeId(1L)
                     .reviewRating(4.5)
                     .build();
 
     private static ReviewSaveRequestDto reviewUpdateRequestDto =
             ReviewSaveRequestDto.builder()
                     .content("good bye")
-                    .place(place)
+                    .placeId(1L)
                     .reviewRating(3.5)
                     .build();
 
