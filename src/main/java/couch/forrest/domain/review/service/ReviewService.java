@@ -27,7 +27,9 @@ public class ReviewService {
 
     public Long save(ReviewSaveRequestDto requestDto, Member member)
     {
-
+        Place place = Place.builder()
+                .id(requestDto.getPlaceId())
+                .build();
         Review review = Review.builder()
                 .reviewRating(requestDto.getReviewRating())
                 .content(requestDto.getContent())
@@ -35,7 +37,7 @@ public class ReviewService {
                 .member(member)
                 .name(member.getName())
                 .image(requestDto.getImage())
-                .place(requestDto.getPlace())
+                .place(place)
                 .build();
 
         return reviewRepository.save(review).getId();
