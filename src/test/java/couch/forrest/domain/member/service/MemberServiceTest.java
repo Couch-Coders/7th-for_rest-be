@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @WebAppConfiguration
-@TestPropertySource(properties = {"spring.config.location=classpath:application-test.properties"})
+@TestPropertySource(properties = {"spring.config.location=classpath:application-h2-test.properties"})
 @Slf4j
 @Transactional
 @SpringBootTest
