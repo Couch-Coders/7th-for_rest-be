@@ -19,7 +19,7 @@ public class AuthConfig {
     private final FirebaseAuth firebaseAuth;
 
     @Bean
-    @Profile("test")
+    @Profile("default")
     public AuthFilterContainer mockAuthFilter() {
         log.info("Initializing local AuthFilter");
         AuthFilterContainer authFilterContainer = new AuthFilterContainer();
@@ -28,7 +28,7 @@ public class AuthConfig {
     }
 
     @Bean
-    @Profile({"default", "prod"})
+    @Profile("prod")
     public AuthFilterContainer firebaseAuthFilter() {
         log.info("Initializing Firebase AuthFilter");
         AuthFilterContainer authFilterContainer = new AuthFilterContainer();
