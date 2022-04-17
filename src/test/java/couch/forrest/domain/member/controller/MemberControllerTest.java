@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebAppConfiguration
-@TestPropertySource(properties = {"spring.config.location=classpath:application-test.properties"})
+@TestPropertySource(properties = {"spring.config.location=classpath:application-h2-test.properties"})
 @Slf4j
 @Transactional
 @SpringBootTest
@@ -72,7 +72,7 @@ class MemberControllerTest {
         memberService.register(email, name, picture, uid);
 
         ResultActions resultActions = mockMvc.perform(
-                        get("/members/me")
+                        get("/members/login")
                                 .header("Authorization", "Bearer " + uid)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding(StandardCharsets.UTF_8)

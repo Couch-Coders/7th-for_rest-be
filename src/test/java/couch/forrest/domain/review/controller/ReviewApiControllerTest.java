@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebAppConfiguration
-@TestPropertySource(properties = {"spring.config.location=classpath:application-test.properties"})
+@TestPropertySource(properties = {"spring.config.location=classpath:application-h2-test.properties"})
 @Slf4j
 @Transactional
 @SpringBootTest
