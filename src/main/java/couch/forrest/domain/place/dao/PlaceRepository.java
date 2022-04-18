@@ -13,6 +13,10 @@ import java.util.List;
 public interface PlaceRepository extends JpaRepository<Place, Long>,placeRepositoryCustom {
 
     Page<Place> findAllByCategoryAndRegion1AndRegion2In(Pageable pageable,String category, String region1, String[] region2);
+    Page<Place> findALlByCategoryAndRegion1(Pageable pageable, String category, String region1);
+
+
+    Page<Place> findAllByCategoryAndRegion1(Pageable pageable,String category, String region1);
 
 
     Page<Place> findAllByCategoryAndRegion1(Pageable pageable,String category, String region1);
