@@ -2,6 +2,7 @@ package couch.forrest.domain.review.controller;
 
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
+import couch.forrest.domain.review.dto.response.ReviewListResponseDto;
 import couch.forrest.domain.review.entity.Review;
 import couch.forrest.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class ReviewController {
     }
 
     @GetMapping("{placeId}/with-place")
-    public List<Review> loadAllReview(@PathVariable Long id) {
+    public List<ReviewListResponseDto> loadAllReview(@PathVariable Long id) {
         return reviewService.loadAllReview(id);
     }
 
