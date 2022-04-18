@@ -31,22 +31,32 @@ public class PlaceResponseDto {
     private Long viewCount;
 
     public static PlaceResponseDto toDto(Place place) {
+        String address = place.getAddress().equals("EMPTY") ? null : place.getAddress();
+        String info = place.getPlaceinfo().equals("EMPTY") ? null : place.getPlaceinfo();
+        String contact = place.getPhone().equals("EMPTY") ? null : place.getPhone();
+        String img_src = place.getImage().equals("EMPTY") ? null : place.getImage();
+        String openHours = place.getOperatingHours().equals("EMPTY") ? null : place.getOperatingHours();
+        String cost = place.getCost().equals("EMPTY") ? null : place.getCost();
+        String tag = place.getTag().equals("EMPTY") ? null : place.getTag();
+        String wayinfo = place.getWayinfo().equals("EMPTY") ? null : place.getWayinfo();
+        String link_url = place.getLink_url().equals("EMPTY") ? null : place.getLink_url();
+
         return PlaceResponseDto.builder()
                 .id(place.getId())
                 .name(place.getName())
-                .address(place.getAddress())
+                .address(address)
                 .region1(place.getRegion1())
                 .region2(place.getRegion2())
                 .category(place.getCategory())
-                .info(place.getPlaceinfo())
-                .cost(place.getCost())
-                .img_src(place.getImage())
-                .contact(place.getPhone())
-                .openHours(place.getOperatingHours())
-                .cost(place.getCost())
-                .tag(place.getTag())
-                .wayinfo(place.getWayinfo())
-                .link_url(place.getLink_url())
+                .info(info)
+                .cost(cost)
+                .img_src(img_src)
+                .contact(contact)
+                .openHours(openHours)
+                .cost(cost)
+                .tag(tag)
+                .wayinfo(wayinfo)
+                .link_url(link_url)
                 .likeCount(place.getLikeCount())
                 .viewCount(place.getViewCount())
                 .build();
