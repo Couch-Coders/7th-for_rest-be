@@ -13,23 +13,23 @@ import java.time.LocalDateTime;
 @Getter
 public class ReviewListResponseDto {
     private Long id;
-    private Member member;
+    private Long memberId;
     private String name;
     private String picture;
     private double reviewRating;
     private String content;
     private String image;
-    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     public ReviewListResponseDto(Review review){
         this.id = review.getId();
-        this.member = review.getMember();
+        this.memberId = review.getMember().getId();
         this.name = review.getName();
         this.picture = review.getPicture();
         this.reviewRating = review.getReviewRating();
         this.content = review.getContent();
         this.image = review.getImage();
-        this.createdDate = review.getCreatedDate();
+        this.modifiedDate = review.getLastModifiedDate();
     }
 
 }
