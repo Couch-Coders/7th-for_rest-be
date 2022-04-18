@@ -13,27 +13,28 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-public class ReviewApiController {
+@RequestMapping("/reviews")
+public class ReviewController {
     private final ReviewService reviewService;
 
-    @PostMapping("/reviews")
+    @PostMapping("")
     public Long save(@RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member) {
         return reviewService.save(requestDto, member);
     }
 
-    @PatchMapping("/reviews/{reviewId}")
+    @PatchMapping("{reviewId}")
     public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member)
     {
         return reviewService.update(id, requestDto,member);
     }
 
-    @DeleteMapping("/reviews/{reviewId}")
+    @DeleteMapping("{reviewId}")
     public Long delete(@PathVariable Long id, @AuthenticationPrincipal Member member) {
         reviewService.delete(id,member);
         return id;
     }
 
-    @GetMapping("/reviews/{placeId}/with-place")
+    @GetMapping("{placeId}/with-place")
     public List<Review> loadAllReview(@PathVariable Long id) {
         return reviewService.loadAllReview(id);
     }
