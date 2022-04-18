@@ -14,8 +14,7 @@ import lombok.Getter;
 public class PlaceRequestDto {
 
     private String category;
-    private String region1;
-    private String region2;
-
+    private String region_1;
+    private String region_2;
 
 }
