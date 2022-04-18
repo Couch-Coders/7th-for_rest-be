@@ -28,23 +28,6 @@ public class PlaceService {
     }
 
     public Page<PlaceListResponseDto> findPlaceList(PlaceRequestDto dto, Pageable pageable) {
-<<<<<<< HEAD
-        if (dto.getRegion2() == "") {
-            return placeRepository.
-                    findALlByCategoryAndRegion1(
-                            pageable,
-                            dto.getCategory(),
-                            dto.getRegion1()).map(PlaceListResponseDto::toDto);
-        }
-
-        String[] region2Arr = dto.getRegion2().split("-");
-        return placeRepository.
-                findAllByCategoryAndRegion1AndRegion2In(
-                        pageable,
-                        dto.getCategory(),
-                        dto.getRegion1(),
-                        region2Arr).map(PlaceListResponseDto::toDto);
-=======
         String[] region2Arr = dto.getRegion_2().split("-");
 
 
@@ -70,7 +53,6 @@ public class PlaceService {
         }
 
         return placeList;
->>>>>>> place수정
     }
 
 

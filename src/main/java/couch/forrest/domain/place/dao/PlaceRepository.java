@@ -18,6 +18,9 @@ public interface PlaceRepository extends JpaRepository<Place, Long>,placeReposit
 
     Page<Place> findAllByCategoryAndRegion1(Pageable pageable,String category, String region1);
 
+
+    Page<Place> findAllByCategoryAndRegion1(Pageable pageable,String category, String region1);
+
     @Modifying
     @Query("update Place a set a.likeCount = a.likeCount + 1 where a.id = :id")
     int plusLikeCount(Long id);
