@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-class ReviewApiControllerTest {
+class ReviewControllerTest {
 
     @Autowired
     private MemberService memberService;
