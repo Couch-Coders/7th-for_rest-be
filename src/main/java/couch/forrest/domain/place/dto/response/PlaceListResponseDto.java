@@ -22,12 +22,16 @@ public class PlaceListResponseDto {
     private Long likeCount;
 
     public static PlaceListResponseDto toDto(Place place) {
+        String address = place.getAddress().equals("EMPTY") ? null : place.getAddress();
+        String img_src = place.getImage().equals("EMPTY") ? null : place.getImage();
+        String tag = place.getTag().equals("EMPTY") ? null : place.getTag();
+
         return PlaceListResponseDto.builder()
                 .id(place.getId())
                 .name(place.getName())
-                .address(place.getAddress())
-                .img_src(place.getImage())
-                .tag(place.getTag())
+                .address(address)
+                .img_src(img_src)
+                .tag(tag)
                 .likeCount(place.getLikeCount())
                 .build();
     }
