@@ -2,10 +2,12 @@ package couch.forrest.domain.review.dto.response;
 
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.review.entity.Review;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 public class ReviewResponseDto {
 

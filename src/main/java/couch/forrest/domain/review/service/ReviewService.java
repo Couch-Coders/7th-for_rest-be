@@ -5,6 +5,7 @@ import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.review.dao.ReviewRepository;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
+import couch.forrest.domain.review.dto.response.ReviewListResponseDto;
 import couch.forrest.domain.review.entity.Review;
 import couch.forrest.exception.CustomException;
 import couch.forrest.exception.ErrorCode;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -69,7 +71,9 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public List<Review> loadAllReview(Long placeId) {
-        return reviewRepository.loadReview(placeId);
+    public List<ReviewListResponseDto> loadAllReview(Long placeId) {
+        return reviewRepository.loadReview(placeId).stream()
+                .map(ReviewListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
