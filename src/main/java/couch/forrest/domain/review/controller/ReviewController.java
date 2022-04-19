@@ -6,6 +6,7 @@ import couch.forrest.domain.review.dto.response.ReviewListResponseDto;
 import couch.forrest.domain.review.entity.Review;
 import couch.forrest.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +20,21 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("")
-    public Long save(@RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member) {
+    public Long save(@RequestBody ReviewSaveRequestDto requestDto, Authentication authentication) {
+        Member member = (Member)authentication.getPrincipal();
         return reviewService.save(requestDto, member);
     }
 
     @PatchMapping("{reviewId}")
-    public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, @AuthenticationPrincipal Member member)
+    public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, Authentication authentication)
     {
+        Member member = (Member)authentication.getPrincipal();
         return reviewService.update(id, requestDto,member);
     }
 
     @DeleteMapping("{reviewId}")
-    public Long delete(@PathVariable Long id, @AuthenticationPrincipal Member member) {
+    public Long delete(@PathVariable Long id , Authentication authentication) {
+        Member member = (Member)authentication.getPrincipal();
         reviewService.delete(id,member);
         return id;
     }
