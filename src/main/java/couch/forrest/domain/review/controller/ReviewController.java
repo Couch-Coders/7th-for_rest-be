@@ -25,14 +25,14 @@ public class ReviewController {
         return reviewService.save(requestDto, member);
     }
 
-    @PatchMapping("{reviewId}")
+    @PatchMapping("/{id}")
     public Long update(@PathVariable Long id, @RequestBody ReviewSaveRequestDto requestDto, Authentication authentication)
     {
         Member member = (Member)authentication.getPrincipal();
         return reviewService.update(id, requestDto,member);
     }
 
-    @DeleteMapping("{reviewId}")
+    @DeleteMapping("/{id}")
     public Long delete(@PathVariable Long id , Authentication authentication) {
         Member member = (Member)authentication.getPrincipal();
         reviewService.delete(id,member);
