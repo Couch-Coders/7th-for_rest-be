@@ -6,6 +6,7 @@ import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.review.dao.ReviewRepository;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
 import couch.forrest.domain.review.dto.response.ReviewListResponseDto;
+import couch.forrest.domain.review.dto.response.ReviewResponseDto;
 import couch.forrest.domain.review.entity.Review;
 import couch.forrest.exception.CustomException;
 import couch.forrest.exception.ErrorCode;
@@ -75,5 +76,13 @@ public class ReviewService {
         return reviewRepository.loadReview(placeId).stream()
                 .map(ReviewListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public ReviewResponseDto findReviewById(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰는 존제하지 않습니다."));
+        ReviewResponseDto dto = new ReviewResponseDto(review);
+        return dto;
     }
 }

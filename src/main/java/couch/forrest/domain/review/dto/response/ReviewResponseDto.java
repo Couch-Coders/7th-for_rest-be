@@ -14,7 +14,7 @@ public class ReviewResponseDto {
     private Member member;
     private String name;
     private String picture;
-    private double reviewRating;
+    private String reviewRating;
     private String content;
     private String image;
     private LocalDateTime createdDate;
@@ -24,7 +24,7 @@ public class ReviewResponseDto {
         this.member = review.getMember();
         this.name = review.getName();
         this.picture = review.getPicture();
-        this.reviewRating = review.getReviewRating();
+        this.reviewRating = String.valueOf(review.getReviewRating());
         this.content = review.getContent();
         this.image = review.getImage();
         this.createdDate = review.getCreatedDate();
