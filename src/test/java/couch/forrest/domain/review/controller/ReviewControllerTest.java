@@ -176,4 +176,25 @@ class ReviewControllerTest {
                 .andExpect(status().isOk());
 
     }
+
+    @DisplayName("댓글 조회 테스트")
+    @Test
+    void searchReview() throws Exception {
+        Optional<Member> member = memberRepository.findByUid(member1.getUid());
+        Optional<Place> place = placeRepository.findById(place1.getId());
+        Optional<Review> review = reviewRepository.findById(review1.getId());
+
+        if(member.isEmpty())
+            memberRepository.save(member1);
+        if(place.isEmpty())
+            placeRepository.save(place1);
+        if(review.isEmpty())
+            reviewRepository.save(review1);
+
+        mockMvc.perform(
+                        get("/reviews/"+place1.getId()+"/with-place")
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }

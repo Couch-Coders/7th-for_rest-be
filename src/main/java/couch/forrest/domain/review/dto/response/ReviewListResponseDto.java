@@ -16,7 +16,7 @@ public class ReviewListResponseDto {
     private Long memberId;
     private String name;
     private String picture;
-    private double reviewRating;
+    private String reviewRating;
     private String content;
     private String image;
     private LocalDateTime modifiedDate;
@@ -26,7 +26,7 @@ public class ReviewListResponseDto {
         this.memberId = review.getMember().getId();
         this.name = review.getName();
         this.picture = review.getPicture();
-        this.reviewRating = review.getReviewRating();
+        this.reviewRating = String.valueOf(review.getReviewRating());
         this.content = review.getContent();
         this.image = review.getImage();
         this.modifiedDate = review.getLastModifiedDate();
