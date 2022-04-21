@@ -1,10 +1,14 @@
 package couch.forrest.domain.review.controller;
 
 import couch.forrest.domain.member.entity.Member;
+import couch.forrest.domain.place.entity.Place;
+import couch.forrest.domain.place.service.PlaceService;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
 import couch.forrest.domain.review.dto.response.ReviewListResponseDto;
+import couch.forrest.domain.review.dto.response.ReviewResponseDto;
 import couch.forrest.domain.review.entity.Review;
 import couch.forrest.domain.review.service.ReviewService;
+import couch.forrest.exception.place.NotFoundPlaceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +22,7 @@ import java.util.List;
 @RequestMapping("/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
+    private final PlaceService placeService;
 
     @PostMapping("")
     public Long save(@RequestBody ReviewSaveRequestDto requestDto, Authentication authentication) {
@@ -40,8 +45,15 @@ public class ReviewController {
     }
 
     @GetMapping("{placeId}/with-place")
-    public List<ReviewListResponseDto> loadAllReview(@PathVariable Long id) {
-        return reviewService.loadAllReview(id);
+    public List<ReviewListResponseDto> loadAllReview(@PathVariable Long placeId) {
+
+        Place place = placeService.findOne(placeId).orElseThrow(() -> new NotFoundPlaceException("존재하지 않는 place_id 입니다. place_id : " + placeId));
+        return reviewService.loadAllReview(placeId);
+    }
+
+    @GetMapping("/{id}")
+    public ReviewResponseDto loadReview(@PathVariable Long id){
+        return reviewService.findReviewById(id);
     }
 
 }
