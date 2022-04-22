@@ -1,7 +1,9 @@
 package couch.forrest;
 
 
+import couch.forrest.domain.place.dao.PlaceRepository;
 import couch.forrest.domain.place.entity.Place;
+import couch.forrest.domain.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -18,13 +21,22 @@ public class InitDb {
 
     private final InitService initService;
 
+    private final PlaceRepository placeRepository;
+
+    private final PlaceService placeService;
+
 
 //    @PostConstruct
     public void init() {
         CSVReader csvReader = new CSVReader();
         List<List<String>> lists = csvReader.readCSV();
         List<Place> places = new ArrayList<>();
+        int i = 0;
         for (List<String> list : lists) {
+            i++;
+            if (i > 100) {
+                break;
+            }
             System.out.println("list.size() = " + list.size());
             String placename = list.get(0);
             String category = list.get(1);
@@ -76,17 +88,38 @@ public class InitDb {
         initService.dbInit(places);
     }
 
+
+//    @PostConstruct
+    public void replaceEmptytoNull() {
+
+
+        for (int i = 1; i < 7875; i++) {
+            Long placeId = Long.valueOf(i);
+            initService.dbChange(placeId);
+        }
+
+
+    }
+
+
+
     @Component
     @Transactional
     @RequiredArgsConstructor
     static class InitService {
         private final EntityManager em;
+        private final PlaceService placeService;
 
         public void dbInit(List<Place> places) {
             for (Place place : places) {
                 em.persist(place);
             }
         }
+
+        public void dbChange(Long id) {
+            placeService.replaceEmptyToNullInPlaceTable(id);
+        }
+
 
 
     }

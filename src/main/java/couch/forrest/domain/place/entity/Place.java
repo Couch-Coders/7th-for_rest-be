@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
@@ -68,5 +69,39 @@ public class Place extends BaseTimeEntity {
 
     @Column(name = "view_count")
     private Long viewCount;
+
+
+    public void EmptyToNull() {
+        String empty = "EMPTY";
+        if (this.address.equals(empty)) {
+            this.address = null;
+        }
+        if (this.cost.equals(empty)) {
+            this.cost = null;
+        }
+        if (this.image.equals(empty)) {
+            this.image = null;
+        }
+        if (this.link_url.equals(empty)) {
+            this.link_url = null;
+        }
+        if (this.operatingHours.equals(empty)) {
+            this.operatingHours = null;
+        }
+        if (this.phone.equals(empty)) {
+            this.phone = null;
+        }
+        if (this.placeinfo.equals(empty)) {
+            this.placeinfo = null;
+        }
+        if (this.tag.equals(empty)) {
+            this.tag = null;
+        }
+        if (this.wayinfo.equals(empty)) {
+            this.wayinfo = null;
+
+        }
+
+    }
 
 }

@@ -5,6 +5,7 @@ import couch.forrest.domain.place.dao.PlaceRepository;
 import couch.forrest.domain.place.dto.request.PlaceRequestDto;
 import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.domain.place.entity.Place;
+import couch.forrest.exception.place.NotFoundPlaceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,6 +54,18 @@ public class PlaceService {
         }
 
         return placeList;
+    }
+
+    public void replaceEmptyToNullInPlaceTable(Long id) {
+        try {
+            Place place = placeRepository.findById(id).orElseThrow(() -> new NotFoundPlaceException("존재하지 않는 place_id 입니다. place_id : " + id));
+            place.EmptyToNull();
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            System.out.println("오류난 플레이스 id = " + id);
+        }
+
+
     }
 
 
