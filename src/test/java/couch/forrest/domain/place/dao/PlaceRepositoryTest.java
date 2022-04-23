@@ -3,10 +3,13 @@ package couch.forrest.domain.place.dao;
 import couch.forrest.domain.place.dto.request.PlaceRequestDto;
 import couch.forrest.domain.place.entity.Place;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,6 +25,7 @@ class PlaceRepositoryTest {
     @Autowired
     PlaceRepository placeRepository;
 
+    @DisplayName("장소 리스트 호출 테스트")
     @Test
     @Transactional
     public void findPlaceList() {

@@ -6,10 +6,12 @@ import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.place.service.PlaceService;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@Transactional
 class PlaceControllerTest {
 
     @Autowired
@@ -27,8 +28,10 @@ class PlaceControllerTest {
     @Autowired
     PlaceRepository placeRepository;
 
-    @Autowired
-    PlaceController placeController;
+
+    // MockMvc 사용하면 좋아요
+    //@Autowired
+    //PlaceController placeController;
 
 
     @Test
