@@ -20,6 +20,7 @@ public class ReviewListResponseDto {
     private String content;
     private String image;
     private LocalDateTime modifiedDate;
+    private LocalDateTime createdDate;
 
     public ReviewListResponseDto(Review review){
         this.id = review.getId();
@@ -30,6 +31,7 @@ public class ReviewListResponseDto {
         this.content = review.getContent();
         this.image = review.getImage();
         this.modifiedDate = review.getLastModifiedDate();
+        this.createdDate = review.getCreatedDate();
     }
 
 }
