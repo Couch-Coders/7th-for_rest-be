@@ -43,6 +43,8 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.4'
+
 
 	/*
      * `NoClassDefFoundError` 관련 대응으로 필요하다.
@@ -51,6 +53,8 @@ dependencies {
 			"jakarta.persistence:jakarta.persistence-api",
 			"jakarta.annotation:jakarta.annotation-api",
 			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
+
 
 }
 
