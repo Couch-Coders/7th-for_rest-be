@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @Transactional
 @SpringBootTest
-@AutoConfigureMockMvc
 class MemberServiceTest {
 
     private static final String uid = "abcd";
