@@ -53,7 +53,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰는 존제하지 않습니다. id="+id));
 
         if (review.getMember().getId() != member.getId()){
-            throw new InternalException(ErrorCode.FORBIDDEN_USER.getDetail());
+            throw new IllegalArgumentException(ErrorCode.FORBIDDEN_USER.getDetail());
         }
         review.update(requestDto.getImage()
         ,requestDto.getContent()
