@@ -21,7 +21,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.Filter;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -36,11 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
-@WebAppConfiguration
-@TestPropertySource(properties = {"spring.config.location=classpath:application-h2-test.properties"})
-@Slf4j
 @SpringBootTest
-@AutoConfigureMockMvc
 class ReviewControllerTest {
 
     @Autowired
@@ -49,17 +48,30 @@ class ReviewControllerTest {
     private PlaceRepository placeRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+
     @Autowired
+    private WebApplicationContext wac;
+
     private MockMvc mockMvc;
+
+    @Autowired
+    private Filter springSecurityFilterChain;
+
     @Autowired
     private ObjectMapper objectMapper;
 
+    @BeforeEach
+    public void beforeEach() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac)
+                .addFilter(springSecurityFilterChain)
+                .build();
+    }
+
     private static Place place1 = Place.builder()
-            .name("롯데월드")
+            .name("갱냄롯데월드")
             .category("테마파크")
             .region1("서울")
             .region2("송파구")
-            .id(1L)
             .build();
 
     private static Member member1 = Member.builder()
@@ -77,39 +89,54 @@ class ReviewControllerTest {
             .build();
 
     private static  Review review1 = Review.builder()
-            .name("가드릭")
+            .name("가드릭123")
             .picture("sdfsdf")
-            .id(1L)
             .place(place1)
             .member(member1)
             .content("테스트111111111 리뷰 입니다")
             .build();
 
-    private static ReviewSaveRequestDto reviewSaveRequestDto =
-            ReviewSaveRequestDto.builder()
-                    .content("안녕하세요 반가워요 잘있어요 다시만나요")
-                    .placeId(1L)
-                    .reviewRating(4.5)
-                    .build();
 
     @BeforeEach
     void setUp() {
         Optional<Member> member = memberRepository.findByUid(member1.getUid());
-        Optional<Place> place = placeRepository.findById(place1.getId());
-        Optional<Review> review = reviewRepository.findById(review1.getId());
+        Optional<Place> place = placeRepository.findByName(place1.getName());
+        Optional<Review> review = reviewRepository.findByName(review1.getName());
 
         if(member.isEmpty())
             memberRepository.save(member1);
         if(place.isEmpty())
             placeRepository.save(place1);
-        if(review.isEmpty())
-            reviewRepository.save(review1);
+
+
+        if(review.isEmpty()) {
+            Optional<Member> member2 = memberRepository.findByUid(member1.getUid());
+            Optional<Place> place2 = placeRepository.findByName(place1.getName());
+            Review review2 = Review.builder()
+                    .name("가드릭123")
+                    .picture("sdfsdf")
+                    .place(place2.get())
+                    .member(member2.get())
+                    .content("테스트111111111 리뷰 입니다")
+                    .build();
+            reviewRepository.save(review2);
+        }
     }
 
 
     @DisplayName("댓글 등록 테스트")
     @Test
     void saveReview() throws Exception {
+        Optional<Place> place = placeRepository.findByName(place1.getName());
+
+        ReviewSaveRequestDto reviewSaveRequestDto =
+                ReviewSaveRequestDto.builder()
+                        .content("안녕하세요 반가워요 잘있어요 다시만나요")
+                        .placeId(place.get().getId())
+                        .reviewRating(4.5)
+                        .build();
+
+
         mockMvc.perform(
                         post("/reviews")
                                 .header("Authorization", "Bearer " + member1.getUid())
@@ -127,8 +154,18 @@ class ReviewControllerTest {
     @DisplayName("댓글 수정 테스트")
     @Test
     void updateReview() throws Exception {
+        Optional<Place> place = placeRepository.findByName(place1.getName());
+        Optional<Review> review = reviewRepository.findByName(review1.getName());
+
+        ReviewSaveRequestDto reviewSaveRequestDto =
+                ReviewSaveRequestDto.builder()
+                        .content("안녕하세요 반가워요 11111")
+                        .placeId(place.get().getId())
+                        .reviewRating(4.5)
+                        .build();
+
         mockMvc.perform(
-                        patch("/reviews/1")
+                        patch("/reviews/"+review.get().getId())
                                 .header("Authorization", "Bearer " + member1.getUid())
                                 .content(objectMapper.writeValueAsString(reviewSaveRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -142,8 +179,11 @@ class ReviewControllerTest {
     @DisplayName("댓글 삭제 테스트")
     @Test
     void deleteReview() throws Exception {
+
+        Optional<Review> review = reviewRepository.findByName(review1.getName());
+
         mockMvc.perform(
-                        delete("/reviews/1")
+                        delete("/reviews/"+  review.get().getId())
                                 .header("Authorization", "Bearer " + member1.getUid())
                 )
                 .andDo(print())
@@ -154,8 +194,10 @@ class ReviewControllerTest {
     @DisplayName("댓글 조회 테스트")
     @Test
     void searchReview() throws Exception {
+        Optional<Place> place = placeRepository.findByName(place1.getName());
+
         mockMvc.perform(
-                        get("/reviews/"+place1.getId()+"/with-place")
+                        get("/reviews/"+place.get().getId()+"/with-place")
                 )
                 .andDo(print())
                 .andExpect(status().isOk());

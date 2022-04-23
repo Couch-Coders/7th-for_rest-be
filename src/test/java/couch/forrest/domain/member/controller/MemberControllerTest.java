@@ -31,18 +31,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-@WebAppConfiguration
-@TestPropertySource(properties = {"spring.config.location=classpath:application-h2-test.properties"})
-@Slf4j
 @ActiveProfiles("test")
-@Transactional
 @SpringBootTest
-@AutoConfigureMockMvc
 class MemberControllerTest {
 
-    private static final String uid = "213";
-    private static final String email = "GODRIC@daum.com";
+    private static final String uid = "2fwe13";
+    private static final String email = "GODRI321C@daum.com";
     private static final String name = "가드릭";
     private static final String picture = "https://www.balladang.com";
 
@@ -52,19 +46,17 @@ class MemberControllerTest {
     @Autowired
     private WebApplicationContext wac;
 
-    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private Filter springSecurityFilterChain;
 
-    /*
+    @BeforeEach
     public void beforeEach() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
                 .addFilter(springSecurityFilterChain)
                 .build();
-    }*/
-
+    }
 
 
 

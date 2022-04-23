@@ -4,11 +4,13 @@ import couch.forrest.domain.place.dao.PlaceRepository;
 import couch.forrest.domain.place.dto.request.PlaceRequestDto;
 import couch.forrest.domain.place.entity.Place;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
