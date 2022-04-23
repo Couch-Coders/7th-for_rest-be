@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlaceRepository extends JpaRepository<Place, Long>,placeRepositoryCustom {
 
@@ -25,4 +26,5 @@ public interface PlaceRepository extends JpaRepository<Place, Long>,placeReposit
     int minusLikeCount(Long id);
 
 
+    Optional<Place> findByName(String name);
 }

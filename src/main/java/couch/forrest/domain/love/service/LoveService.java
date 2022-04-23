@@ -27,6 +27,7 @@ public class LoveService {
                 .id(PlaceId)
                 .build();
 
+        Optional<Place> placeResult = PlaceRepository.findById(PlaceId);
         // 좋아요를 이미 누른 상태인지 확인
         Optional<Love> result = loveRepository.findByMemberAndPlace(member,place);
 
