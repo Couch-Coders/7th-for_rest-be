@@ -1,6 +1,7 @@
 package couch.forrest.domain.review.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.jdi.InternalException;
 import couch.forrest.domain.member.dao.MemberRepository;
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.place.dao.PlaceRepository;
@@ -9,6 +10,7 @@ import couch.forrest.domain.review.dao.ReviewRepository;
 import couch.forrest.domain.review.dto.request.ReviewSaveRequestDto;
 import couch.forrest.domain.review.entity.Review;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -46,7 +51,6 @@ class ReviewControllerTest {
     private ReviewRepository reviewRepository;
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -57,15 +61,6 @@ class ReviewControllerTest {
             .region2("송파구")
             .id(1L)
             .build();
-
-    private static Place place2 = Place.builder()
-            .name("한강 박물관")
-            .category("박물관")
-            .region1("서울")
-            .region2("한강구")
-            .id(2L)
-            .build();
-
 
     private static Member member1 = Member.builder()
             .uid("qwehwq")
@@ -87,10 +82,8 @@ class ReviewControllerTest {
             .id(1L)
             .place(place1)
             .member(member1)
-            .content("테스트 리뷰 입니다")
+            .content("테스트111111111 리뷰 입니다")
             .build();
-
-
 
     private static ReviewSaveRequestDto reviewSaveRequestDto =
             ReviewSaveRequestDto.builder()
@@ -99,36 +92,8 @@ class ReviewControllerTest {
                     .reviewRating(4.5)
                     .build();
 
-
-    @DisplayName("댓글 등록 테스트")
-    @Test
-    void saveReview() throws Exception {
-
-        Optional<Member> member = memberRepository.findByUid(member1.getUid());
-        Optional<Place> place = placeRepository.findById(place1.getId());
-
-        if(member.isEmpty())
-            memberRepository.save(member1);
-        if(place.isEmpty())
-            placeRepository.save(place1);
-
-        mockMvc.perform(
-                        post("/reviews")
-                                .header("Authorization", "Bearer " + member1.getUid())
-                                .content(objectMapper.writeValueAsString(reviewSaveRequestDto))
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .characterEncoding(StandardCharsets.UTF_8)
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isOk());
-
-    }
-
-    @DisplayName("댓글 수정 테스트")
-    @Test
-    void updateReview() throws Exception {
-
+    @BeforeEach
+    void setUp() {
         Optional<Member> member = memberRepository.findByUid(member1.getUid());
         Optional<Place> place = placeRepository.findById(place1.getId());
         Optional<Review> review = reviewRepository.findById(review1.getId());
@@ -139,7 +104,29 @@ class ReviewControllerTest {
             placeRepository.save(place1);
         if(review.isEmpty())
             reviewRepository.save(review1);
+    }
 
+
+    @DisplayName("댓글 등록 테스트")
+    @Test
+    void saveReview() throws Exception {
+        mockMvc.perform(
+                        post("/reviews")
+                                .header("Authorization", "Bearer " + member1.getUid())
+                                .content(objectMapper.writeValueAsString(reviewSaveRequestDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .characterEncoding(StandardCharsets.UTF_8)
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+
+
+    @DisplayName("댓글 수정 테스트")
+    @Test
+    void updateReview() throws Exception {
         mockMvc.perform(
                         patch("/reviews/1")
                                 .header("Authorization", "Bearer " + member1.getUid())
@@ -152,22 +139,9 @@ class ReviewControllerTest {
                 .andExpect(status().isOk());
     }
 
-
     @DisplayName("댓글 삭제 테스트")
     @Test
     void deleteReview() throws Exception {
-
-        Optional<Member> member = memberRepository.findByUid(member1.getUid());
-        Optional<Place> place = placeRepository.findById(place1.getId());
-        Optional<Review> review = reviewRepository.findById(review1.getId());
-
-        if(member.isEmpty())
-            memberRepository.save(member1);
-        if(place.isEmpty())
-            placeRepository.save(place1);
-        if(review.isEmpty())
-            reviewRepository.save(review1);
-
         mockMvc.perform(
                         delete("/reviews/1")
                                 .header("Authorization", "Bearer " + member1.getUid())
@@ -180,21 +154,11 @@ class ReviewControllerTest {
     @DisplayName("댓글 조회 테스트")
     @Test
     void searchReview() throws Exception {
-        Optional<Member> member = memberRepository.findByUid(member1.getUid());
-        Optional<Place> place = placeRepository.findById(place1.getId());
-        Optional<Review> review = reviewRepository.findById(review1.getId());
-
-        if(member.isEmpty())
-            memberRepository.save(member1);
-        if(place.isEmpty())
-            placeRepository.save(place1);
-        if(review.isEmpty())
-            reviewRepository.save(review1);
-
         mockMvc.perform(
                         get("/reviews/"+place1.getId()+"/with-place")
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
 }

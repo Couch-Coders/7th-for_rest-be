@@ -1,5 +1,6 @@
 package couch.forrest.domain.review.service;
 
+import com.sun.jdi.InternalException;
 import couch.forrest.domain.member.dto.response.MemberRegisterResponseDto;
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.place.entity.Place;
@@ -52,7 +53,7 @@ public class ReviewService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰는 존제하지 않습니다. id="+id));
 
         if (review.getMember().getId() != member.getId()){
-            throw new IllegalArgumentException(ErrorCode.FORBIDDEN_USER.getDetail());
+            throw new InternalException(ErrorCode.FORBIDDEN_USER.getDetail());
         }
         review.update(requestDto.getImage()
         ,requestDto.getContent()
