@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class LoveService {
     private final LoveRepository loveRepository;
     private final PlaceRepository PlaceRepository;
+    private long likeCount;
 
     // 좋아요를 누를 시 실행
     public Long likePlace(Member member, Long PlaceId)
@@ -28,6 +31,10 @@ public class LoveService {
                 .build();
 
         Optional<Place> placeResult = PlaceRepository.findById(PlaceId);
+        if(placeResult.isEmpty())
+        {
+            throw new IllegalArgumentException("해당 장소는 존재하지 않습니다. id="+PlaceId);
+        }
         // 좋아요를 이미 누른 상태인지 확인
         Optional<Love> result = loveRepository.findByMemberAndPlace(member,place);
 
@@ -41,7 +48,14 @@ public class LoveService {
 
             // 좋아요를 증가 시킴
             PlaceRepository.plusLikeCount(PlaceId);
-            return loveRepository.save(love).getId();
+            loveRepository.save(love);
+            if(placeResult.get().getLikeCount() == null)
+                likeCount = 0;
+            else
+                likeCount = placeResult.get().getLikeCount() +1L;
+
+            return likeCount;
+
         }
         // 좋아요를 이미 누른 경우 좋아요를 해제
         else{
@@ -49,10 +63,34 @@ public class LoveService {
             PlaceRepository.minusLikeCount(PlaceId);
             Love love = result.get();
             loveRepository.delete(love);
-            return love.getId();
+            if(placeResult.get().getLikeCount() == null)
+                likeCount = 0;
+            else
+                likeCount = placeResult.get().getLikeCount() - 1L;
+
+            return likeCount;
         }
 
 
     }
 
+    public Map<String, String> checkPlace(Member member, Long placeId) {
+        Place place = Place.builder()
+                .id(placeId)
+                .build();
+        Optional<Love> love = loveRepository.findByMemberAndPlace(member, place);
+
+        Optional<Place> placeResult = PlaceRepository.findById(placeId);
+        if(placeResult.isEmpty())
+        {
+            throw new IllegalArgumentException("해당 장소는 존재하지 않습니다. id="+placeId);
+        }
+
+        Map<String, String> map = new HashMap<>();
+        if(love.isPresent())
+            map.put("isLove","true");
+        else
+            map.put("isLove","false");
+        return map;
+    }
 }

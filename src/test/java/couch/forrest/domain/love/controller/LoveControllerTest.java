@@ -42,17 +42,14 @@ class LoveControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private Filter springSecurityFilterChain;
-
     @Autowired
     private WebApplicationContext wac;
-
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private PlaceRepository placeRepository;
     @Autowired
     private LoveRepository loveRepository;
-
 
 
     @BeforeEach
@@ -69,7 +66,6 @@ class LoveControllerTest {
                 .addFilter(springSecurityFilterChain)
                 .build();
     }
-
 
 
     private static Place place1 = Place.builder()
