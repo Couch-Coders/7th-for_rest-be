@@ -22,7 +22,7 @@ public class LoveController {
     }
 
     @GetMapping("/check/{placeId}")
-    public Map<String, String> checkLove(@PathVariable Long placeId, Authentication authentication){
+    public Map<String, Boolean> checkLove(@PathVariable Long placeId, Authentication authentication){
         Member member = (Member)authentication.getPrincipal();
         return loveService.checkPlace(member, placeId);
     }
