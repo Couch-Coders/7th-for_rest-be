@@ -31,16 +31,12 @@ public class PlaceListResponseDto {
     }
 
     public static PlaceListResponseDto toDto(Place place) {
-        String address = place.getAddress().equals("EMPTY") ? null : place.getAddress();
-        String img_src = place.getImage().equals("EMPTY") ? null : place.getImage();
-        String tag = place.getTag().equals("EMPTY") ? null : place.getTag();
-
         return PlaceListResponseDto.builder()
                 .id(place.getId())
                 .name(place.getName())
-                .address(address)
-                .img_src(img_src)
-                .tag(tag)
+                .address(place.getAddress())
+                .img_src(place.getImage())
+                .tag(place.getTag())
                 .likeCount(place.getLikeCount())
                 .build();
     }
