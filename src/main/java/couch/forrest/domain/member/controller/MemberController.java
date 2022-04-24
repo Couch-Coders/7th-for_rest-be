@@ -76,7 +76,7 @@ public class MemberController {
     public ResponseEntity<Result<Page<PlaceListResponseDto>>> myLike(Authentication authentication, Pageable pageable) {
         Member member = (Member) authentication.getPrincipal();
         Page<PlaceListResponseDto> dtos = memberService.findMyFavoritePlace(member, pageable);
-        return ResponseEntity.ok().body(new Result<>(dtos.getSize(), dtos));
+        return ResponseEntity.ok().body(new Result<>(dtos.getNumberOfElements(), dtos));
     }
     
 
