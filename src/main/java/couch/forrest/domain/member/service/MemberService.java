@@ -3,11 +3,15 @@ package couch.forrest.domain.member.service;
 import couch.forrest.domain.member.dao.MemberRepository;
 import couch.forrest.domain.member.dto.response.MemberRegisterResponseDto;
 import couch.forrest.domain.member.entity.Member;
+import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.exception.CustomException;
 import couch.forrest.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,4 +73,11 @@ public class MemberService implements UserDetailsService{
 
         return new MemberRegisterResponseDto(memberRepository.save(member));
     }
+
+
+    public Page<PlaceListResponseDto> findMyFavoritePlace(Member member, Pageable pageable){
+        long memberId = member.getId();
+        return memberRepository.findMyFavoritePlaces(memberId, pageable);
+    }
+
 }

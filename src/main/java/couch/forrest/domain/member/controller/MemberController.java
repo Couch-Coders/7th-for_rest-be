@@ -3,13 +3,17 @@ package couch.forrest.domain.member.controller;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import couch.forrest.common.Result;
 import couch.forrest.domain.member.dto.request.MemberSaveRequestDto;
 import couch.forrest.domain.member.dto.response.MemberRegisterResponseDto;
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.member.entity.MemberInfo;
 import couch.forrest.domain.member.service.MemberService;
+import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.oauth.RequestUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,6 +70,13 @@ public class MemberController {
     public ResponseEntity<MemberRegisterResponseDto> login(Authentication authentication) {
         Member member = ((Member) authentication.getPrincipal());
         return ResponseEntity.ok(new MemberRegisterResponseDto(member));
+    }
+
+    @GetMapping("/myLike")
+    public ResponseEntity<Result<Page<PlaceListResponseDto>>> myLike(Authentication authentication, Pageable pageable) {
+        Member member = (Member) authentication.getPrincipal();
+        Page<PlaceListResponseDto> dtos = memberService.findMyFavoritePlace(member, pageable);
+        return ResponseEntity.ok().body(new Result<>(dtos.getSize(), dtos));
     }
     
 

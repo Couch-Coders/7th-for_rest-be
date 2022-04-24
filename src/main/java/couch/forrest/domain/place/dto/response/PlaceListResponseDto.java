@@ -21,6 +21,15 @@ public class PlaceListResponseDto {
     private String tag;
     private Long likeCount;
 
+    public PlaceListResponseDto(Place place) {
+        this.id = place.getId();
+        this.name = place.getName();
+        this.address = place.getAddress();
+        this.img_src = place.getImage();
+        this.tag = place.getTag();
+        this.likeCount = place.getLikeCount();
+    }
+
     public static PlaceListResponseDto toDto(Place place) {
         return PlaceListResponseDto.builder()
                 .id(place.getId())
@@ -31,5 +40,7 @@ public class PlaceListResponseDto {
                 .likeCount(place.getLikeCount())
                 .build();
     }
+
+
 
 }
