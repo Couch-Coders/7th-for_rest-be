@@ -74,7 +74,7 @@ public class LoveService {
 
     }
 
-    public Map<String, String> checkPlace(Member member, Long placeId) {
+    public Map<String, Boolean> checkPlace(Member member, Long placeId) {
         Place place = Place.builder()
                 .id(placeId)
                 .build();
@@ -86,11 +86,11 @@ public class LoveService {
             throw new IllegalArgumentException("해당 장소는 존재하지 않습니다. id="+placeId);
         }
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Boolean> map = new HashMap<>();
         if(love.isPresent())
-            map.put("isLove","true");
+            map.put("isLove", true);
         else
-            map.put("isLove","false");
+            map.put("isLove", false);
         return map;
     }
 }
