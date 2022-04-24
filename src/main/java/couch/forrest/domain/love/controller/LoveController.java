@@ -2,12 +2,11 @@ package couch.forrest.domain.love.controller;
 
 import couch.forrest.domain.love.service.LoveService;
 import couch.forrest.domain.member.entity.Member;
-import couch.forrest.domain.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +19,12 @@ public class LoveController {
     public Long likePlace(@PathVariable Long placeId, Authentication authentication){
         Member member = (Member)authentication.getPrincipal();
         return loveService.likePlace(member, placeId);
+    }
+
+    @GetMapping("/check/{placeId}")
+    public Map<String, String> checkLove(@PathVariable Long placeId, Authentication authentication){
+        Member member = (Member)authentication.getPrincipal();
+        return loveService.checkPlace(member, placeId);
     }
 
 }
