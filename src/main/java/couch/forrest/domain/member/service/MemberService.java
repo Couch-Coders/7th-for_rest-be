@@ -4,6 +4,7 @@ import couch.forrest.domain.member.dao.MemberRepository;
 import couch.forrest.domain.member.dto.response.MemberRegisterResponseDto;
 import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
+import couch.forrest.domain.place.dto.response.PlaceQResponseDto;
 import couch.forrest.exception.CustomException;
 import couch.forrest.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -75,7 +76,7 @@ public class MemberService implements UserDetailsService{
     }
 
 
-    public Page<PlaceListResponseDto> findMyFavoritePlace(Member member, Pageable pageable){
+    public Page<PlaceQResponseDto> findMyFavoritePlace(Member member, Pageable pageable){
         long memberId = member.getId();
         return memberRepository.findMyFavoritePlaces(memberId, pageable);
     }

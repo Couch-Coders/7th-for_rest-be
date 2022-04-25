@@ -10,6 +10,7 @@ import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.member.entity.MemberInfo;
 import couch.forrest.domain.member.service.MemberService;
 import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
+import couch.forrest.domain.place.dto.response.PlaceQResponseDto;
 import couch.forrest.oauth.RequestUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -73,9 +74,9 @@ public class MemberController {
     }
 
     @GetMapping("/myLike")
-    public ResponseEntity<Result<Page<PlaceListResponseDto>>> myLike(Authentication authentication, Pageable pageable) {
+    public ResponseEntity<Result<Page<PlaceQResponseDto>>> myLike(Authentication authentication, Pageable pageable) {
         Member member = (Member) authentication.getPrincipal();
-        Page<PlaceListResponseDto> dtos = memberService.findMyFavoritePlace(member, pageable);
+        Page<PlaceQResponseDto> dtos = memberService.findMyFavoritePlace(member, pageable);
         return ResponseEntity.ok().body(new Result<>(dtos.getNumberOfElements(), dtos));
     }
     
