@@ -21,10 +21,10 @@ import java.util.Optional;
 public class LoveService {
     private final LoveRepository loveRepository;
     private final PlaceRepository PlaceRepository;
-    private long likeCount;
+    private long loveCount;
 
     // 좋아요를 누를 시 실행
-    public Long likePlace(Member member, Long PlaceId)
+    public Long lovePlace(Member member, Long PlaceId)
     {
         Place place = Place.builder()
                 .id(PlaceId)
@@ -47,28 +47,28 @@ public class LoveService {
                     .build();
 
             // 좋아요를 증가 시킴
-            PlaceRepository.plusLikeCount(PlaceId);
+            PlaceRepository.plusLoveCount(PlaceId);
             loveRepository.save(love);
             if(placeResult.get().getLikeCount() == null)
-                likeCount = 0;
+                loveCount = 0;
             else
-                likeCount = placeResult.get().getLikeCount() +1L;
+                loveCount = placeResult.get().getLikeCount() +1L;
 
-            return likeCount;
+            return loveCount;
 
         }
         // 좋아요를 이미 누른 경우 좋아요를 해제
         else{
             // Place의 likeCount 값 에서 1을 빼준다.
-            PlaceRepository.minusLikeCount(PlaceId);
+            PlaceRepository.minusLoveCount(PlaceId);
             Love love = result.get();
             loveRepository.delete(love);
             if(placeResult.get().getLikeCount() == null)
-                likeCount = 0;
+                loveCount = 0;
             else
-                likeCount = placeResult.get().getLikeCount() - 1L;
+                loveCount = placeResult.get().getLikeCount() - 1L;
 
-            return likeCount;
+            return loveCount;
         }
 
 
