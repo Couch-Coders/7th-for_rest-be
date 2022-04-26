@@ -16,9 +16,9 @@ public class LoveController {
 
     // 특정 장소에 좋아요를 누른 경우 좋아요를 누른 경우인지 아닌지에 따라 좋아요 해제 및 좋아요 등록
     @GetMapping("/{placeId}")
-    public Long likePlace(@PathVariable Long placeId, Authentication authentication){
+    public Long lovePlace(@PathVariable Long placeId, Authentication authentication){
         Member member = (Member)authentication.getPrincipal();
-        return loveService.likePlace(member, placeId);
+        return loveService.lovePlace(member, placeId);
     }
 
     @GetMapping("/check/{placeId}")

@@ -19,11 +19,11 @@ public interface PlaceRepository extends JpaRepository<Place, Long>,placeReposit
 
     @Modifying
     @Query("update Place a set a.likeCount = a.likeCount + 1 where a.id = :id")
-    int plusLikeCount(Long id);
+    int plusLoveCount(Long id);
 
     @Modifying
     @Query("update Place a set a.likeCount = a.likeCount - 1 where a.id = :id")
-    int minusLikeCount(Long id);
+    int minusLoveCount(Long id);
 
 
     Optional<Place> findByName(String name);
