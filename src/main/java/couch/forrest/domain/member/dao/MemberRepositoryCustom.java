@@ -15,4 +15,6 @@ import java.util.List;
 public interface MemberRepositoryCustom {
     // 내가 좋아요를 누른 관광명소 가져오기
     Page<PlaceQResponseDto> findMyFavoritePlaces(Long memberId, Pageable pageable);
+
+    List<PlaceQResponseDto> myPageLovedPlaces(Long memberId);
 }

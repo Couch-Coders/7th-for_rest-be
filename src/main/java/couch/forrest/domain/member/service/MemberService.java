@@ -81,4 +81,9 @@ public class MemberService implements UserDetailsService{
         return memberRepository.findMyFavoritePlaces(memberId, pageable);
     }
 
+    public List<PlaceQResponseDto> myPageLovedPlace(Member member){
+        long memberId = member.getId();
+        return memberRepository.myPageLovedPlaces(memberId);
+    }
+
 }

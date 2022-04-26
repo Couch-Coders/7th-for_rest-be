@@ -79,6 +79,12 @@ public class MemberController {
         Page<PlaceQResponseDto> dtos = memberService.findMyFavoritePlace(member, pageable);
         return ResponseEntity.ok().body(new Result<>(dtos.getNumberOfElements(), dtos));
     }
-    
+
+    @GetMapping("/myPage")
+    public ResponseEntity<Result<List<PlaceQResponseDto>>> SearchMyPage(Authentication authentication) {
+        Member member = (Member)authentication.getPrincipal();
+        List<PlaceQResponseDto> dtos = memberService.myPageLovedPlace(member);
+        return ResponseEntity.ok().body(new Result<>(dtos.size(), dtos));
+    }
 
 }
