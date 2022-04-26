@@ -1,5 +1,6 @@
 package couch.forrest.domain.member.dao;
 
+import com.querydsl.core.QueryFactory;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.CollectionExpression;
 import com.querydsl.core.types.ExpressionUtils;
@@ -75,6 +76,41 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         long total = results.getTotal();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public List<PlaceQResponseDto> myPageLovedPlaces(Long memberId){
+        QMember member = QMember.member;
+        QLove love = QLove.love;
+        QLove subLove = new QLove("subLove");
+        QPlace place = QPlace.place;
+        QReview review = QReview.review;
+
+        List<PlaceQResponseDto> result = queryFactory
+                .select(Projections.fields(PlaceQResponseDto.class,
+                        place.id,
+                        place.name,
+                        place.address,
+                        place.image.as("img_src"),
+                        place.tag,
+                        place.likeCount.as("like_count"),
+                        place.phone,
+                        place.category,
+                        place.region1.as("region_1"),
+                        review.reviewRating.avg().as("avg"),
+                        review.id.count().as("review_count")))
+                .from(place)
+                .leftJoin(review).on(place.eq(review.place))
+                .where(place.in(
+                   select(subLove.place)
+                           .from(subLove)
+                           .where(subLove.member.id.eq(memberId))
+                    )
+                )
+                .groupBy(place.id, place.name, place.address, place.image, place.tag,place.likeCount)
+                .fetch();
+
+        return result;
     }
 
 }
