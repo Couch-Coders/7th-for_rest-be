@@ -57,9 +57,9 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                         place.region1.as("region_1"),
                         review.reviewRating.avg().as("avg"),
                         review.id.count().as("review_count")
-                )).from(review)
-                .leftJoin(place)
-                .on(review.place.eq(place))
+                )).from(place)
+                .leftJoin(review)
+                .on(place.eq(review.place))
                 .where(place.in(
                                      select(subLove.place)
                                         .from(subLove)
