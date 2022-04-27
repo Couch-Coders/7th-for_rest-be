@@ -6,6 +6,8 @@ import couch.forrest.domain.place.dto.response.PlaceListResponseDto;
 import couch.forrest.domain.place.dto.response.PlaceResponseDto;
 import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.place.service.PlaceService;
+import couch.forrest.exception.CustomException;
+import couch.forrest.exception.ErrorCode;
 import couch.forrest.exception.place.NotFoundPlaceException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,7 +36,10 @@ public class PlaceController {
     @Operation(description = "place 상세 정보 조회")
     @GetMapping("{placeId}")
     public PlaceResponseDto placeDetail(@PathVariable("placeId") Long placeId) {
-        Place place = placeService.findOne(placeId).orElseThrow(() -> new NotFoundPlaceException("존재하지 않는 place_id 입니다. place_id : " + placeId));
+        Place place = placeService.findOne(placeId)
+                .orElseThrow(() -> {
+                    throw new CustomException(ErrorCode.NOT_FOUND_PLACE, "존재하지 않는 place id :" + placeId);
+                });
 
         return PlaceResponseDto.toDto(place);
     }

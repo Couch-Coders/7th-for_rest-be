@@ -9,7 +9,8 @@ import couch.forrest.domain.review.dto.response.ReviewResponseDto;
 import couch.forrest.domain.review.dto.response.ReviewResult;
 import couch.forrest.domain.review.entity.Review;
 import couch.forrest.domain.review.service.ReviewService;
-import couch.forrest.exception.place.NotFoundPlaceException;
+import couch.forrest.exception.CustomException;
+import couch.forrest.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -49,7 +50,10 @@ public class ReviewController {
     @GetMapping("{placeId}/with-place")
     public ResponseEntity<ReviewResult<List<ReviewListResponseDto>>> loadAllReview(@PathVariable Long placeId) {
 
-        Place place = placeService.findOne(placeId).orElseThrow(() -> new NotFoundPlaceException("존재하지 않는 place_id 입니다. place_id : " + placeId));
+        Place place = placeService.findOne(placeId)
+                .orElseThrow(() -> {
+                    throw new CustomException(ErrorCode.NOT_FOUND_PLACE, "존재하지 않는 place id :" + placeId);
+                });
         List<ReviewListResponseDto> dtos = reviewService.loadAllReview(placeId);
         return ResponseEntity.ok().body(new ReviewResult<>(dtos.size(), dtos));
     }
