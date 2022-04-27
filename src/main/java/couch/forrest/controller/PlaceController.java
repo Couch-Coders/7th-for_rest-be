@@ -8,7 +8,6 @@ import couch.forrest.domain.place.entity.Place;
 import couch.forrest.domain.place.service.PlaceService;
 import couch.forrest.exception.CustomException;
 import couch.forrest.exception.ErrorCode;
-import couch.forrest.exception.place.NotFoundPlaceException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
