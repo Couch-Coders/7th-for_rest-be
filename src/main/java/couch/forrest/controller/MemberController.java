@@ -10,6 +10,7 @@ import couch.forrest.domain.member.entity.Member;
 import couch.forrest.domain.member.service.MemberService;
 import couch.forrest.domain.place.dto.response.PlaceQResponseDto;
 import couch.forrest.util.RequestUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
+@Tag(name = "Member API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")

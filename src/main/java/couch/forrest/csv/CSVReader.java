@@ -15,20 +15,12 @@ public class CSVReader {
         BufferedReader br = null;
         String line = "";
 
-        String a = "숲속아기동물농장COUCH_SEP,COUCH_SEP,속초COUCH_SEP";
-        String[] il = a.split("COUCH_SEP,");
-        for (String s : il) {
-            System.out.println("s = " + s);
-        }
-
 
         try {
             br = new BufferedReader(new FileReader(csv));
             line = br.readLine();
             while ((line = br.readLine()) != null) { // readLine()은 파일에서 개행된 한 줄의 데이터를 읽어온다.
                 List<String> aLine = new ArrayList<String>();
-
-
 
 
                 line = line.replaceAll("COUCH_SEP\",\"", "COUCH_SEP,");
@@ -38,15 +30,9 @@ public class CSVReader {
                 line += ",";
 
                 line = line.replaceAll("COUCH_SEP\n", "COUCH_SEP,");
-//                System.out.println("line3 = " + line);
                 line = line.replaceAll("COUCH_RETURN", "\n");
-//                System.out.println("line4 = " + line);
-//                System.out.println("line = " + line);
+
                 String[] lineArr = line.split("COUCH_SEP,"); // 파일의 한 줄을 ,로 나누어 배열에 저장 후 리스트로 변환한다.
-                System.out.println("lineArr = " + lineArr.length);
-//                for (String s : lineArr) {
-//                    if ()
-//                }
 
                 for (String s : lineArr) {
                     if (s == "EMPTY") {
@@ -56,10 +42,8 @@ public class CSVReader {
                     }
                 }
 
-//                aLine = Arrays.asList(lineArr);
 
                 csvList.add(aLine);
-
 
 //            while ((line = br.readLine()) != null) { // readLine()은 파일에서 개행된 한 줄의 데이터를 읽어온다.
 //                List<String> aLine = new ArrayList<String>();
