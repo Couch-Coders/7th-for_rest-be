@@ -9,7 +9,8 @@
 [![Java CI with Gradle](https://github.com/Couch-Coders/7th-for_rest-be/actions/workflows/gradle.yml/badge.svg)](https://github.com/Couch-Coders/7th-for_rest-be/actions/workflows/gradle.yml)
 
 
-# 전국 관광명소 추천 플랫폼   🌳[https://for-rest.herokuapp.com/](https://for-rest.herokuapp.com/)🌳
+### [https://for-rest.herokuapp.com/](https://for-rest.herokuapp.com/)
+# 🌳전국 관광명소 추천 플랫폼🌳  
 
 <br>
 
