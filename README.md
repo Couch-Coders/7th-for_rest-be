@@ -79,7 +79,7 @@ BACK-END : [김종완](https://github.com/3210439)
 <br>
 
 
-## ⏰ 칸반 보드
+## 🏗 칸반 보드
 
 ### [FR 프로젝트 칸반보드](https://github.com/Couch-Coders/7th-for_rest-fe/projects/2) 
 ### [BE 프로젝트 칸반보드](https://github.com/Couch-Coders/7th-for_rest-be/projects/1) 
